@@ -1,12 +1,62 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
 import '../style.css';
-
-//Use NavLink from ReactRouter here
+import useAuth from '../UseAuth'
 
 function Navbar(){
+
+    const { user } = useAuth();
+
+    function renderLoginAndRegister(){
+        return (
+            <>
+                <NavLink to="/login"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    >
+                    Login
+                </NavLink>
+                <NavLink to="/register"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    >
+                    Register
+                </NavLink>
+            </>
+        )
+    }
+
+    function renderLogout(){
+        return (
+            <NavLink to="/logout"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                }
+                >
+                Logout
+            </NavLink>
+        )
+    }
+
     return (
         <div className='navbar'>
-            Navbar
+            <NavLink to="/"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                }
+                >
+                Homepage
+            </NavLink>
+            <NavLink to="/editor"
+                className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active" : ""
+                }
+                >
+                Editor
+            </NavLink>
+            {user ? renderLogout() : renderLoginAndRegister()}
         </div>
     )
 }

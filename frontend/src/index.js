@@ -4,7 +4,7 @@ import './style.css';
 import App from './App';
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from './components/ErrorPage';
-import FrontPage from './components/FrontPage';
+import HomePage from './components/HomePage';
 import Login from './components/Login';
 import Register from './components/Register';
 import EditorPage from './components/EditorPage';
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <FrontPage />
+        element: <HomePage />
       },
       {
         path: "login",

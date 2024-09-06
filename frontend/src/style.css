@@ -2,13 +2,21 @@ body {
   margin: 0;
 }
 
-.navbar, .footer, .login, .register, .front-page, .error-page, .editor-page{
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page{
   width: 100%;
   height: 200px;
 }
 
 .navbar{
   background-color:blue;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .footer{
@@ -23,7 +31,7 @@ body {
   background-color:darkorange
 }
 
-.front-page{
+.home-page{
   background-color:indigo
 }
 
@@ -33,4 +41,8 @@ body {
 
 .editor-page{
   background-color:darkturquoise;
+}
+
+a.active{
+  color:black;
 }
