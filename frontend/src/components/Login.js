@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 function Login(){
 
     const [formData, setFormData] = useState({
-        login: "",
+        email: "",
         password: ""
     });
 
@@ -15,24 +15,29 @@ function Login(){
     const navigate = useNavigate();
 
     async function handleSubmit(event){
+
         event.preventDefault();
 
-        try{
-            const response = await fetch("http://localhost:8080/auth/login", {
-                method: "POST",
-                body: JSON.stringify(formData)
-            });
-    
-            if(response.ok){
-                login(true);//can set user details returned from api
-                navigate("/editor")
-            }else{
-                console.log("smth went wrong")
-            }
-        }catch(error){
-            console.log("Error:", error);
-        }
+        const response = await fetch("http://localhost:8080/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(formData)
+        });
 
+        if(response.ok){
+            fetch("http://localhost:8080/user/info", {
+                method: "GET",
+                credentials: "include"
+            }).then( res => login(res.json()) )
+
+            navigate("/editor")
+        }else{
+            console.log(response.status)
+        }
+        
     }
 
     function handleFormChange(event){
@@ -50,9 +55,9 @@ function Login(){
             <h1>Login Page</h1>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Login/Email:
-                    <input name='login' 
-                        value={formData.login} 
+                    Email:
+                    <input name='email' 
+                        value={formData.email} 
                         onChange={(event) => handleFormChange(event)}  
                     />
                 </label>
