@@ -9,7 +9,7 @@ a{
 
 .navbar, .footer, .login, .register, .home-page, .error-page, .editor-page{
   width: 100%;
-  height: 200px;
+  min-height: 200px;
 }
 
 .navbar{
@@ -17,6 +17,10 @@ a{
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+}
+
+.navbar-logout{
+  cursor: pointer;
 }
 
 .footer{
@@ -41,6 +45,29 @@ a{
 
 .editor-page{
   background-color:darkturquoise;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editor-input, .editor-preview{
+  width: 650px;
+  min-height: 200px;
+  background-color: beige;
+  margin: 30px
+}
+
+.editor-input{
+  resize: horizontal;
+  max-width: 900px;
+  min-width: 200px
+}
+
+.note-menu-elem{
+  cursor: pointer;
+  margin: 4px 0;
+  background-color: brown;
+  user-select: none;
 }
 
 a.active{

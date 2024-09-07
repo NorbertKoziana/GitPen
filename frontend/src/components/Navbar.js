@@ -5,7 +5,7 @@ import useAuth from '../UseAuth'
 
 function Navbar(){
 
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
 
     function renderLoginAndRegister(){
         return (
@@ -30,13 +30,9 @@ function Navbar(){
 
     function renderLogout(){
         return (
-            <NavLink to="/logout"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
-                }
-                >
+            <div className='navbar-logout' onClick={logout}>
                 Logout
-            </NavLink>
+            </div>
         )
     }
 

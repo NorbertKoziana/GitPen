@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './style.css';
 import App from './App';
-import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
 import ErrorPage from './components/ErrorPage';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
@@ -34,8 +34,15 @@ function Root(){
     setUser(user)
   }
   
-  const logout = () => {
-    setUser(null); 
+  const logout = async () => {
+    const respone = await fetch("http://localhost:8080/auth/logout",{
+      method: "POST",
+      credentials: "include"
+    })
+
+    if(respone.ok){
+      setUser(null);
+    }
   }
   
   const router = createBrowserRouter([
@@ -70,7 +77,6 @@ function Root(){
     </UserContext.Provider>
   )
 }
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
