@@ -50,11 +50,10 @@ a{
   justify-content: space-between;
 }
 
-.editor-input, .editor-preview{
-  width: 650px;
-  min-height: 200px;
+.editor-input{
+  min-width: 450px;
+  min-height: 400px;
   background-color: beige;
-  margin: 30px
 }
 
 .editor-input{
@@ -77,4 +76,19 @@ a.active{
 h1{
   margin: 0;
   padding: 10px 0;
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 832px;
+  margin: 0 auto;
+  padding: 32px;
+  background-color: white;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
 }
