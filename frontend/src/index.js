@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './style.css';
 import App from './App';
-import { createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import ErrorPage from './components/ErrorPage';
 import HomePage from './components/HomePage';
-import Login from './components/Login';
-import Register from './components/Register';
 import EditorPage from './components/EditorPage';
 import UserContext from './UserContext'
+import Signup from 'components/Signup';
+import Limit from './components/Limit'
 
 function Root(){
 
@@ -35,12 +35,17 @@ function Root(){
   }
   
   const logout = async () => {
-    const respone = await fetch("http://localhost:8080/auth/logout",{
+    const response = await fetch("http://localhost:8080/auth/logout",{
       method: "POST",
-      credentials: "include"
+      credentials: "include",
+      redirect: "manual"
     })
 
-    if(respone.ok){
+    console.log("LOGOUT REQUEST RETURNS: " + response.status)
+
+    //todo fix logout, logout is not removing jsession cookie and return status 0
+
+    if(response.ok || response.status===302){
       setUser(null);
     }
   }
@@ -56,16 +61,16 @@ function Root(){
           element: <HomePage />
         },
         {
-          path: "login",
-          element: <Login />
-        },
-        {
-          path: "register",
-          element: <Register />
-        },
-        {
           path: "editor",
           element: <EditorPage />
+        },
+        {
+          path: "signup",
+          element: <Signup />
+        },
+        {
+          path: "limit",
+          element: <Limit />
         }
       ]
     },

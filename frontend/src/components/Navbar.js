@@ -10,19 +10,12 @@ function Navbar(){
     function renderLoginAndRegister(){
         return (
             <>
-                <NavLink to="/login"
+                <NavLink to="/signup"
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
                     }
                     >
-                    Login
-                </NavLink>
-                <NavLink to="/register"
-                    className={({ isActive, isPending }) =>
-                        isPending ? "pending" : isActive ? "active" : ""
-                    }
-                    >
-                    Register
+                    Sign up
                 </NavLink>
             </>
         )

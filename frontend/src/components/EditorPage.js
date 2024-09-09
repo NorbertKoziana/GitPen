@@ -10,23 +10,22 @@ function EditorPage(){
     const [editorInput, setEditorInput] = useState("");
     const [notePreview, setNotePreview] = useState("");
 
-    //if possible use gitub API, else (i.e. too much api requests) use markdown
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch("https://api.github.com/markdown",{
+            const response = await fetch("http://localhost:8080/github/markdown",{
                 method: "POST",
                 headers: {
-                  'X-GitHub-Api-Version': '2022-11-28',
                   "Content-Type": "application/json"
                 },
-                body: JSON.stringify({text: editorInput})
+                body: JSON.stringify({text: editorInput}),
+                credentials: "include"
             })
 
             if(response.ok){
                 const data = await response.text();
                 setNotePreview(data);
-            }else if(response.status === 403){
-                console.log("Rate limit exceeded, using marked instead of github API.")
+            }else{
+                console.log("Something went wrong, using marked instead of github API.")
                 setNotePreview(marked.parse(editorInput))
             }
         }
