@@ -51,7 +51,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
-                        .logoutUrl("/auth/logout").logoutSuccessUrl("/").
+                        .logoutUrl("/auth/logout").logoutSuccessUrl("/")
                 )
                 .oauth2Login((oauth2) -> oauth2
                         .loginPage("/auth/login")
