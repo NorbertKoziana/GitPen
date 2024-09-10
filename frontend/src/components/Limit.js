@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import '../style.css'
+import useAuth from '../UseAuth'
 
 function Limit(){
 
     const [limit, setLimit] = useState('');
+
+    const { user } = useAuth();
 
     useEffect(() => {
         async function getLimit(){
@@ -17,7 +20,7 @@ function Limit(){
         }
         getLimit();
     }
-    , [])
+    , [user])
 
     return(
         <div className='limit'>
