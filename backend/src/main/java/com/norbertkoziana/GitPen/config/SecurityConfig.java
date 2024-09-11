@@ -57,7 +57,7 @@ public class SecurityConfig {
                         .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler()))
                 )
                 .oauth2Login((oauth2) -> oauth2
-                        .loginPage("/auth/login")
+                        .loginPage("http://localhost:3000/signup")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(this.oauth2UserService())
                         )

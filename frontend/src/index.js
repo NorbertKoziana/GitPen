@@ -7,7 +7,7 @@ import ErrorPage from './components/ErrorPage';
 import HomePage from './components/HomePage';
 import EditorPage from './components/EditorPage';
 import Signup from 'components/Signup';
-import Limit from './components/Limit'
+import UserRepositories from 'components/UserRepositories';
 
 function Root(){
 
@@ -30,9 +30,9 @@ function Root(){
           element: <Signup />
         },
         {
-          path: "limit",
-          element: <Limit />
-        }
+          path: "repos",
+          element: <UserRepositories />
+        },
       ]
     },
   ]);

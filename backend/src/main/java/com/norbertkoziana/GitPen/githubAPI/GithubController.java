@@ -32,7 +32,7 @@ public class GithubController {
 
         return webClient.post()
                 .uri("https://api.github.com/markdown")
-                .headers(headers -> headers.setBearerAuth(accessToken))  // Use the access token
+                .headers(headers -> headers.setBearerAuth(accessToken))
                 .bodyValue(markdownRequest)
                 .retrieve()
                 .bodyToMono(String.class);
@@ -52,7 +52,18 @@ public class GithubController {
 
         return webClient.get()
                 .uri("https://api.github.com/rate_limit")
-                .headers(headers -> headers.setBearerAuth(accessToken))  // Use the access token
+                .headers(headers -> headers.setBearerAuth(accessToken))
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
+    @GetMapping("/repos")
+    public Mono<String> repos(Authentication authentication) {
+        String accessToken = gitHubApiService.getAccessToken(authentication);
+
+        return webClient.get()
+                .uri("https://api.github.com/user/repos")
+                .headers(headers -> headers.setBearerAuth(accessToken))
                 .retrieve()
                 .bodyToMono(String.class);
     }

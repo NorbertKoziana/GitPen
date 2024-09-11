@@ -7,7 +7,7 @@ function Navbar(){
 
     const { user, logout } = useAuth();
 
-    function renderLoginAndRegister(){
+    function renderSignup(){
         return (
             <>
                 <NavLink to="/signup"
@@ -23,9 +23,18 @@ function Navbar(){
 
     function renderLogout(){
         return (
-            <div className='navbar-logout' onClick={logout}>
-                Logout
-            </div>
+            <>
+                <NavLink to="/repos"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    >
+                    Your repositories
+                </NavLink>
+                <div className='navbar-logout' onClick={logout}>
+                    Logout
+                </div>
+            </>
         )
     }
 
@@ -45,7 +54,7 @@ function Navbar(){
                 >
                 Editor
             </NavLink>
-            {user ? renderLogout() : renderLoginAndRegister()}
+            {user ? renderLogout() : renderSignup()}
         </div>
     )
 }

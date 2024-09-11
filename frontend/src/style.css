@@ -8,7 +8,7 @@ a{
   color: white;
 }
 
-.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page, .signup{
+.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page, .signup, .user-repositories{
   width: 100%;
   min-height: 200px;
 }
@@ -104,6 +104,27 @@ h1{
   border-radius: 8px;
   color: black;
   font-weight: 700;
+}
+
+.user-repositories{
+  min-height: 300px;
+  background-color: rgb(155, 192, 216);
+
+}
+
+.private-repo{
+  color: red;
+  cursor: pointer;
+}
+
+.public-repo{
+  color: chartreuse;
+  cursor: pointer;
+}
+
+.permission-prompt{
+  background-color: rgb(155, 192, 216);
+  margin: 0;
 }
 
 .markdown-body {
