@@ -25,7 +25,6 @@ public class User implements OAuth2User {
     private Integer githubID;
     private String login;
     private Boolean locked;
-    //todo tu jeszcze beda przechowywane notatki usera
 
     @Override
     public Map<String, Object> getAttributes() {

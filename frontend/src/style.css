@@ -109,17 +109,22 @@ h1{
 .user-repositories{
   min-height: 300px;
   background-color: rgb(155, 192, 216);
-
+  padding: 30px;
 }
 
 .private-repo{
   color: red;
-  cursor: pointer;
 }
 
 .public-repo{
   color: chartreuse;
-  cursor: pointer;
+}
+
+.repo{
+  padding: 12px 20px;
+  background-color: rgb(100, 133, 122);
+  border-radius: 6px;
+  margin: 15px 20px;
 }
 
 .permission-prompt{
@@ -135,6 +140,10 @@ h1{
   margin: 0 auto;
   padding: 32px;
   background-color: white;
+}
+
+.clickable{
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {

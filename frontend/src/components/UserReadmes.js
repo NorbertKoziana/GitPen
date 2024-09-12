@@ -1,0 +1,1 @@
+//to bedzie wyswietlac readme usera wczytane z bazy danych

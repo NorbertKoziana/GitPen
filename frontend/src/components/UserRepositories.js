@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import '../style.css'
+import { useNavigate } from 'react-router-dom'
 
 function UserRepositories(){
 
@@ -25,21 +26,51 @@ function UserRepositories(){
 
     function displayRepositories(){
         return repos.map((value) => {
-            return value.private ? <div className="private-repo" key={value.id}>{value.name}</div>
-            : <div className="public-repo" key={value.id}>{value.name}</div>
+            let selectedClass = value.private ? "private-repo" : "public-repo";
+            return (
+            <div className={`repo ${selectedClass}`} key={value.id}
+            >
+                <p>{value.name}</p>
+                <p className="clickable" onClick={() => CreateReadmeUsingGithub(value.owner.login, value.name)}>
+                    Create new readme starting with your current readme.
+                </p>
+                <p className="clickable" onClick={() => CreateReadmeUsingAi(value.owner.login, value.name)}>
+                    Use AI to create readme for you without any effort.
+                </p>
+            </div>)
+        });
+    }
+
+    const navigate = useNavigate();
+
+    async function CreateReadmeUsingGithub(owner, repo){
+        const response = await fetch(`http://localhost:8080/readme/github/${owner}/${repo}`,{
+            method: "POST",
+            credentials: "include"
         })
+
+        if(response.ok){
+            const readmeId = await response.json();
+            navigate("/editor", { state: { readmeId: readmeId } })
+            console.log(readmeId);
+        }
+    }
+
+    function CreateReadmeUsingAi(owner, repo){
+        let repoId = 1;
+        navigate("/editor", { state: { repoId } })
     }
 
     return (
-        <>
+        <div className="user-repositories">
             <h3 className="permission-prompt">
                 If you dont see your repository change its visibility to public or install app on the desired repository by clicking the link: 
                 <a href="https://github.com/apps/gitpen-v1/installations/new">INSTALL</a>
             </h3>
-            <div className="user-repositories">
+            <div className="repositories-container">
                 {displayRepositories()}
             </div>
-        </>
+        </div>
     )
 }
 

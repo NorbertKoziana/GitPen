@@ -5,6 +5,7 @@ import { marked } from 'marked';
 import useAuth from '../UseAuth';
 import NoteSelection from './NoteSelection';
 import 'github-markdown-css'
+import { useLocation } from 'react-router-dom';
 
 function EditorPage(){
     const [editorInput, setEditorInput] = useState("");
@@ -46,6 +47,32 @@ function EditorPage(){
     function handleFormChange(event){
         setEditorInput(event.target.value)
     }
+
+    const location = useLocation().state;
+     
+    useEffect(() => {
+        async function fetchData(){
+            if(location == null)
+                return;
+
+            const { readmeId } = location;
+
+            const response = await fetch(`http://localhost:8080/readme/user/me/${readmeId}`,{
+                method: "GET",
+                credentials: "include",
+            })
+
+            if(response.ok){
+                const data = await response.text();
+                setEditorInput(data);
+            }else{
+                console.log("Something went wrong, could not load readme from database.")
+            }
+        }
+        fetchData();
+    }
+    , [location]);
+
 
     return (
         <div className='editor-page'>
