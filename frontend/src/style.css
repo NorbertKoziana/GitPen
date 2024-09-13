@@ -146,7 +146,7 @@ h1{
   cursor: pointer;
 }
 
-.new-readme-button{
+.new-readme-button, .prev-page-button, .next-page-button, .readme{
   cursor: pointer;
   margin-bottom: 10px;
   padding: 12px 20px;
@@ -154,6 +154,17 @@ h1{
   border-radius: 6px;
   display: inline-block;
 }
+
+.next-page-button, .prev-page-button{
+  margin: 20px;
+}
+
+.readme{
+  display: block;
+  background-color: rgb(0, 94, 255);
+  margin: 15px;
+}
+
 
 @media (max-width: 767px) {
   .markdown-body {

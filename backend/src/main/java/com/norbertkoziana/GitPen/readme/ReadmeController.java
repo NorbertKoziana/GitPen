@@ -2,12 +2,13 @@ package com.norbertkoziana.GitPen.readme;
 
 import com.norbertkoziana.GitPen.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
+
+import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/readme")
@@ -25,6 +26,11 @@ public class ReadmeController {
     @PostMapping("/empty")
     public Integer createEmptyReadme(Authentication authentication) {
         return readmeService.createEmptyReadme(authentication);
+    }
+
+    @GetMapping("/all/user/me")
+    public Page<Readme> getAllUserReadmesWithPagination(Authentication authentication, @RequestParam Integer pageNumber){
+        return readmeService.getAllReadmesWithPagination(authentication, pageNumber);
     }
 
     @GetMapping("{readmeId}/user/me/")

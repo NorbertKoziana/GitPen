@@ -3,9 +3,11 @@ import com.norbertkoziana.GitPen.githubAPI.GitHubApiService;
 import com.norbertkoziana.GitPen.user.User;
 import com.norbertkoziana.GitPen.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 
@@ -42,6 +44,13 @@ public class ReadmeServiceImpl implements ReadmeService{
     @Override
     public Integer createEmptyReadme(Authentication authentication) {
         return createReadmeForAuthenticatedUser(authentication, "");
+    }
+    @Override
+    public Page<Readme> getAllReadmesWithPagination(Authentication authentication, Integer pageNumber) {
+        User ownerUser = userRepository.findByGithubID( ( (User) authentication.getPrincipal() ).getGithubID() )
+                .orElseThrow();
+
+        return readmeRepository.findAllByOwner(ownerUser, PageRequest.of(pageNumber, 2, Sort.by(Sort.Direction.DESC, "lastModified")));
     }
 
     @Override

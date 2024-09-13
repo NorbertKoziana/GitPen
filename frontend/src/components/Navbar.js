@@ -31,6 +31,13 @@ function Navbar(){
                     >
                     Create new readme
                 </NavLink>
+                <NavLink to="/readmes"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    >
+                    Display your readmes
+                </NavLink>
                 <div className='navbar-logout' onClick={logout}>
                     Logout
                 </div>

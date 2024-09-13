@@ -8,6 +8,7 @@ import HomePage from './components/HomePage';
 import EditorPage from './components/EditorPage';
 import Signup from 'components/Signup';
 import UserRepositories from 'components/UserRepositories';
+import UserReadmes from 'components/UserReadmes';
 
 function Root(){
 
@@ -32,6 +33,10 @@ function Root(){
         {
           path: "repos",
           element: <UserRepositories />
+        },
+        {
+          path: "readmes",
+          element: <UserReadmes />
         },
       ]
     },
