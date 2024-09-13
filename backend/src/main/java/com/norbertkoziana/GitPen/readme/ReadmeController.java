@@ -22,7 +22,12 @@ public class ReadmeController {
         return readmeService.createReadmeFromGithub(authentication, owner, repo);
     }
 
-    @GetMapping("/user/me/{readmeId}")
+    @PostMapping("/empty")
+    public Integer createEmptyReadme(Authentication authentication) {
+        return readmeService.createEmptyReadme(authentication);
+    }
+
+    @GetMapping("{readmeId}/user/me/")
     public ResponseEntity<String> getReadmeById(Authentication authentication, @PathVariable Integer readmeId){
         Readme readme = readmeService.getReadmeById(readmeId);
 

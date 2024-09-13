@@ -52,17 +52,33 @@ function UserRepositories(){
         if(response.ok){
             const readmeId = await response.json();
             navigate("/editor", { state: { readmeId: readmeId } })
-            console.log(readmeId);
         }
     }
 
-    function CreateReadmeUsingAi(owner, repo){
+
+    //To be implemented
+    async function CreateReadmeUsingAi(owner, repo){
         let repoId = 1;
         navigate("/editor", { state: { repoId } })
     }
 
+    async function CreateEmptyReadme(){
+        const response = await fetch("http://localhost:8080/readme/empty", {
+            method: "POST",
+            credentials: "include"
+        })
+
+        if(response.ok){
+            const readmeId = await response.json();
+            navigate("/editor", { state: { readmeId: readmeId } })
+        }
+    }
+
     return (
         <div className="user-repositories">
+            <div className="new-readme-button" onClick={CreateEmptyReadme}>
+                Create new empty readme.
+            </div>
             <h3 className="permission-prompt">
                 If you dont see your repository change its visibility to public or install app on the desired repository by clicking the link: 
                 <a href="https://github.com/apps/gitpen-v1/installations/new">INSTALL</a>

@@ -29,7 +29,7 @@ function Navbar(){
                         isPending ? "pending" : isActive ? "active" : ""
                     }
                     >
-                    Your repositories
+                    Create new readme
                 </NavLink>
                 <div className='navbar-logout' onClick={logout}>
                     Logout

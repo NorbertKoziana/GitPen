@@ -8,7 +8,7 @@ a{
   color: white;
 }
 
-.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page, .signup, .user-repositories{
+.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page, .signup{
   width: 100%;
   min-height: 200px;
 }
@@ -144,6 +144,15 @@ h1{
 
 .clickable{
   cursor: pointer;
+}
+
+.new-readme-button{
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 12px 20px;
+  background-color: rgb(234, 255, 1);
+  border-radius: 6px;
+  display: inline-block;
 }
 
 @media (max-width: 767px) {

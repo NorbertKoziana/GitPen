@@ -57,7 +57,7 @@ function EditorPage(){
 
             const { readmeId } = location;
 
-            const response = await fetch(`http://localhost:8080/readme/user/me/${readmeId}`,{
+            const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
                 method: "GET",
                 credentials: "include",
             })

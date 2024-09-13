@@ -19,11 +19,7 @@ public class ReadmeServiceImpl implements ReadmeService{
 
     private final UserRepository userRepository;
 
-    @Override
-    public Integer createReadmeFromGithub(Authentication authentication, String owner, String repo) {
-
-        String userReadme = gitHubApiService.getRepositoryReadme(authentication, owner, repo).block();
-
+    private Integer createReadmeForAuthenticatedUser(Authentication authentication, String userReadme){
         User ownerUser = userRepository.findByGithubID( ( (User) authentication.getPrincipal() ).getGithubID() )
                 .orElseThrow();
 
@@ -35,6 +31,19 @@ public class ReadmeServiceImpl implements ReadmeService{
 
         return readmeRepository.save(readme).getId();
     }
+
+    @Override
+    public Integer createReadmeFromGithub(Authentication authentication, String owner, String repo) {
+
+        String userReadme = gitHubApiService.getRepositoryReadme(authentication, owner, repo).block();
+
+        return createReadmeForAuthenticatedUser(authentication, userReadme);
+    }
+    @Override
+    public Integer createEmptyReadme(Authentication authentication) {
+        return createReadmeForAuthenticatedUser(authentication, "");
+    }
+
     @Override
     public Readme getReadmeById(Integer readmeId) {
         return readmeRepository.findById(readmeId).orElseThrow();
