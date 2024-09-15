@@ -33,9 +33,11 @@ function UserReadmes(){
 
         return readmes.content.map(readme => {
             return (
-                <div className='readme' onClick={() => navigate("/editor", { state: { readmeId: readme.id } })}>
+                <div className='readme' 
+                key={readme.id}
+                onClick={() => navigate("/editor", { state: { readmeId: readme.id } })}>
                     <p>{readme.id}</p>
-                    <p>{readme.lastModified}</p>
+                    <p>{readme.lastModified.replace("T", " ")}</p>
                 </div>
             )
         })

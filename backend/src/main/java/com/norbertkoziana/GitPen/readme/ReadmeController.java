@@ -1,5 +1,6 @@
 package com.norbertkoziana.GitPen.readme;
 
+import com.norbertkoziana.GitPen.model.UpdateReadmeRequest;
 import com.norbertkoziana.GitPen.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,7 @@ public class ReadmeController {
         return readmeService.getAllReadmesWithPagination(authentication, pageNumber);
     }
 
-    @GetMapping("{readmeId}/user/me/")
+    @GetMapping("/{readmeId}/user/me/")
     public ResponseEntity<String> getReadmeById(Authentication authentication, @PathVariable Integer readmeId){
         Readme readme = readmeService.getReadmeById(readmeId);
 
@@ -42,5 +43,12 @@ public class ReadmeController {
         }
 
         return new ResponseEntity<>(readme.getContent(), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{readmeId}/update")
+    public ResponseEntity<Object> updateReadme(Authentication authentication, @PathVariable Integer readmeId, @RequestBody UpdateReadmeRequest
+    updateReadmeRequest){
+        readmeService.updateReadmeContent(readmeId, updateReadmeRequest.getContent());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

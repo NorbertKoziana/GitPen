@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react'
 import '../style.css';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
-import useAuth from '../UseAuth';
-import NoteSelection from './NoteSelection';
 import 'github-markdown-css'
 import { useLocation } from 'react-router-dom';
 
 function EditorPage(){
     const [editorInput, setEditorInput] = useState("");
     const [notePreview, setNotePreview] = useState("");
+    const [changesSaved, setChangesSaved] = useState(true);
 
     useEffect(() => {
         async function fetchData(){
@@ -42,20 +41,18 @@ function EditorPage(){
         )
     };
 
-    const { user } = useAuth();
-
     function handleFormChange(event){
         setEditorInput(event.target.value)
+        setChangesSaved(false);
     }
 
     const location = useLocation().state;
+    const readmeId = location ? location.readmeId : null;
      
     useEffect(() => {
         async function fetchData(){
-            if(location == null)
+            if(readmeId == null)
                 return;
-
-            const { readmeId } = location;
 
             const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
                 method: "GET",
@@ -71,19 +68,45 @@ function EditorPage(){
         }
         fetchData();
     }
-    , [location]);
+    , [readmeId]);
 
+    async function updateReadme(){
+        const response = await fetch(`http://localhost:8080/readme/${readmeId}/update`,{
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({content: editorInput})
+        })
+
+        if(response.ok){
+            setChangesSaved(true);
+        }else{
+            console.log("Readme wasn't saved, try again.")
+        }
+    }
+
+    function generateUpdateButton(){
+        return (
+            <div className={`update-readme-button ${changesSaved ? 'saved' : 'not-saved'}`} onClick={updateReadme}>
+                Save changes to local database
+            </div>
+        )
+    }
 
     return (
-        <div className='editor-page'>
-            {user === null ? "" : <NoteSelection />}
-            <form className='editor-form' onSubmit={e => e.preventDefault()}>
-                <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} />
-            </form>
-            <div className='editor-preview markdown-body'
-                dangerouslySetInnerHTML={markup}    
-            />
-        </div>
+        <>
+            {location && generateUpdateButton()}
+            <div className='editor-page'>
+                <form className='editor-form' onSubmit={e => e.preventDefault()}>
+                    <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} />
+                </form>
+                <div className='editor-preview markdown-body'
+                    dangerouslySetInnerHTML={markup}    
+                />
+            </div>
+        </>
     )
 }
 

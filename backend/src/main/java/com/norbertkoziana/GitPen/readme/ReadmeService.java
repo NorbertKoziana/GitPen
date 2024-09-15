@@ -8,4 +8,5 @@ public interface ReadmeService {
     Integer createEmptyReadme(Authentication authentication);
     Page<Readme> getAllReadmesWithPagination(Authentication authentication, Integer pageNumber);
     Readme getReadmeById(Integer readmeId);
+    void updateReadmeContent(Integer readmeId, String content);
 }

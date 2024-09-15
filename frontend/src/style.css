@@ -165,6 +165,19 @@ h1{
   margin: 15px;
 }
 
+.update-readme-button{
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.update-readme-button.saved{
+  background-color: rgb(140, 255, 0);
+}
+
+.update-readme-button.not-saved{
+  background-color: rgb(229, 14, 14);
+}
+
 
 @media (max-width: 767px) {
   .markdown-body {

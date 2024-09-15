@@ -2,6 +2,7 @@ package com.norbertkoziana.GitPen.readme;
 import com.norbertkoziana.GitPen.githubAPI.GitHubApiService;
 import com.norbertkoziana.GitPen.user.User;
 import com.norbertkoziana.GitPen.user.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ public class ReadmeServiceImpl implements ReadmeService{
 
         Readme readme = Readme.builder()
                 .content(userReadme)
-                .lastModified(LocalDateTime.now())
+                .lastModified(LocalDateTime.now().withNano(0))
                 .owner(ownerUser)
                 .build();
 
@@ -50,11 +51,21 @@ public class ReadmeServiceImpl implements ReadmeService{
         User ownerUser = userRepository.findByGithubID( ( (User) authentication.getPrincipal() ).getGithubID() )
                 .orElseThrow();
 
-        return readmeRepository.findAllByOwner(ownerUser, PageRequest.of(pageNumber, 2, Sort.by(Sort.Direction.DESC, "lastModified")));
+        return readmeRepository.findAllByOwner(ownerUser, PageRequest.of(pageNumber, 4, Sort.by(Sort.Direction.DESC, "lastModified")));
     }
 
     @Override
     public Readme getReadmeById(Integer readmeId) {
         return readmeRepository.findById(readmeId).orElseThrow();
     }
+
+    @Override
+    @Transactional
+    public void updateReadmeContent(Integer readmeId, String content) {
+        Readme updateReadme = readmeRepository.findById(readmeId)
+                .orElseThrow();
+        updateReadme.setContent(content);
+        updateReadme.setLastModified(LocalDateTime.now().withNano(0));
+    }
+
 }
