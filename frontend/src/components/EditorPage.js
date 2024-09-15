@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../style.css';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
@@ -10,8 +10,23 @@ function EditorPage(){
     const [notePreview, setNotePreview] = useState("");
     const [changesSaved, setChangesSaved] = useState(true);
 
+    const firstRender = useRef(true);
+
+    const location = useLocation().state;
+    const readmeId = location ? location.readmeId : null;
+
     useEffect(() => {
         async function fetchData(){
+            if(!firstRender.current){
+                setChangesSaved(false);
+            }else{
+                firstRender.current = false;
+            }
+
+            if(!readmeId){
+                localStorage.setItem("editorInput", editorInput);
+            }
+
             const response = await fetch("http://localhost:8080/github/markdown",{
                 method: "POST",
                 headers: {
@@ -26,14 +41,15 @@ function EditorPage(){
                 setNotePreview(data);
             }else{
                 console.log("Something went wrong, using marked instead of github API.")
-                setNotePreview(marked.parse(editorInput))
+                setNotePreview(marked.parse(editorInput).toString())
             }
+
         }
         const timeoutId = setTimeout(fetchData, 1000);
 
         return () => clearTimeout(timeoutId);
     }
-    , [editorInput]);
+    , [editorInput, readmeId]);
     
     const markup = { 
         __html: DOMPurify.sanitize(
@@ -43,17 +59,10 @@ function EditorPage(){
 
     function handleFormChange(event){
         setEditorInput(event.target.value)
-        setChangesSaved(false);
     }
-
-    const location = useLocation().state;
-    const readmeId = location ? location.readmeId : null;
      
     useEffect(() => {
         async function fetchData(){
-            if(readmeId == null)
-                return;
-
             const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
                 method: "GET",
                 credentials: "include",
@@ -66,11 +75,19 @@ function EditorPage(){
                 console.log("Something went wrong, could not load readme from database.")
             }
         }
-        fetchData();
-    }
-    , [readmeId]);
+        if(readmeId === null){
+            const savedInput = localStorage.getItem("editorInput");
+            if(savedInput)
+                setEditorInput(savedInput);
+        }else{
+            fetchData();
+        }
+    }, [readmeId]);
 
     async function updateReadme(){
+        if(changesSaved)
+            return;
+
         const response = await fetch(`http://localhost:8080/readme/${readmeId}/update`,{
             method: "PATCH",
             headers: {
