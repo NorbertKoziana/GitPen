@@ -16,7 +16,6 @@ function UserRepositories(){
             if(response.ok){
                 const data = await response.json();
                 setRepos(data);
-                console.log(data);
             }else{
                 console.error(response.status)
             }

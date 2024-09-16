@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ReadmePreview from './ReadmePreview';
 
 function UserReadmes(){
 
     const [readmes, setReadmes] = useState(null);
     const [page, setPage] = useState(0);
-
-    console.log(readmes);
 
     useEffect(() => {
         async function fetchData(){
@@ -34,10 +33,11 @@ function UserReadmes(){
         return readmes.content.map(readme => {
             return (
                 <div className='readme' 
-                key={readme.id}
-                onClick={() => navigate("/editor", { state: { readmeId: readme.id } })}>
-                    <p>{readme.id}</p>
-                    <p>{readme.lastModified.replace("T", " ")}</p>
+                    key={readme.id}
+                    onClick={() => navigate("/editor", { state: { readmeId: readme.id } })}
+                >
+                    <p>Created at: {readme.lastModified.replace("T", " ")}</p>
+                    <ReadmePreview content={readme.content} />
                 </div>
             )
         })
@@ -53,7 +53,7 @@ function UserReadmes(){
 
     function nextPage(){
         setPage(oldPage => {
-            if(oldPage < readmes.totalPages)
+            if(oldPage < readmes.totalPages - 1)
                 return oldPage + 1;
             return oldPage;
         });

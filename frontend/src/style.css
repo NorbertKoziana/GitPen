@@ -132,21 +132,11 @@ h1{
   margin: 0;
 }
 
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 400px;
-  max-width: 894px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 32px;
-  background-color: white;
-}
-
 .clickable{
   cursor: pointer;
 }
 
-.new-readme-button, .prev-page-button, .next-page-button, .readme{
+.new-readme-button, .prev-page-button, .next-page-button{
   cursor: pointer;
   margin-bottom: 10px;
   padding: 12px 20px;
@@ -157,12 +147,16 @@ h1{
 
 .next-page-button, .prev-page-button{
   margin: 20px;
+  user-select: none;
 }
 
 .readme{
   display: block;
-  background-color: rgb(0, 94, 255);
   margin: 15px;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: 2px solid black;
 }
 
 .update-readme-button{
@@ -178,6 +172,27 @@ h1{
   background-color: rgb(229, 14, 14);
 }
 
+.readme-preview{
+  display: flex;
+  justify-content: center;
+}
+
+#small-readme-preview{
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 400px;
+  max-width: 894px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  background-color: white;
+}
 
 @media (max-width: 767px) {
   .markdown-body {
