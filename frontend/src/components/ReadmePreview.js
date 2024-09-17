@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import '../style.css'
 import DOMPurify from 'dompurify';
 import 'github-markdown-css'
+import {usePopup} from '../PopupProvider'
 
 function ReadmePreview(props){
 
@@ -15,24 +16,27 @@ function ReadmePreview(props){
         )
     };
 
+    const {handleOpenPopup} = usePopup();
+
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch("http://localhost:8080/github/markdown",{
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({text: content}),
-                credentials: "include"
-            })
-
-            if(response.ok){
-                const data = await response.text();
-                setReadmePreview(data);
-            }else{
-                console.log("Something went wrong.")
+            try{
+                const response = await fetch("http://localhost:8080/github/markdown",{
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({text: content}),
+                    credentials: "include"
+                })
+    
+                if(response.ok){
+                    const data = await response.text();
+                    setReadmePreview(data);
+                }
+            }catch(error){
+                handleOpenPopup("info", "Could not generate preview for your readmes")
             }
-
         }
         fetchData();
     }

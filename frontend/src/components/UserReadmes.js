@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReadmePreview from './ReadmePreview';
+import {usePopup} from '../PopupProvider'
 
 function UserReadmes(){
 
     const [readmes, setReadmes] = useState(null);
     const [page, setPage] = useState(0);
 
+    const {handleOpenPopup} = usePopup();
+
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch("http://localhost:8080/readme/all/user/me?" + 
-                new URLSearchParams({
-                    pageNumber: page.toString()
-                }).toString(),
-            {
-                method: "GET",
-                credentials: "include"
-            });
+            try{
+                const response = await fetch("http://localhost:8080/readme/all/user/me?" + 
+                    new URLSearchParams({
+                        pageNumber: page.toString()
+                    }).toString(),
+                {
+                    method: "GET",
+                    credentials: "include"
+                });
 
-            const readmes = await response.json();
-            setReadmes(readmes);
+                if(response.ok){
+                    const readmes = await response.json();
+                    setReadmes(readmes);
+                }
+            }catch(error){
+                handleOpenPopup("error", "Could not load your readmes.")
+            }
+
         }
         fetchData();
     }, [page]);

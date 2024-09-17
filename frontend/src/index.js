@@ -9,6 +9,8 @@ import EditorPage from './components/EditorPage';
 import Signup from 'components/Signup';
 import UserRepositories from 'components/UserRepositories';
 import UserReadmes from 'components/UserReadmes';
+import { StyledEngineProvider } from '@mui/material/styles';
+import PopupProvider from './PopupProvider';
 
 function Root(){
 
@@ -51,6 +53,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   //<React.StrictMode>
-    <Root />
+  <StyledEngineProvider injectFirst>
+    <PopupProvider>
+        <Root />
+    </PopupProvider>
+  </StyledEngineProvider>
   //</React.StrictMode>
 );

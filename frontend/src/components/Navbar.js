@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import '../style.css';
-import useAuth from '../UseAuth'
+import {useAuth} from '../UserProvider'
 
 function Navbar(){
 

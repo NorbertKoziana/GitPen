@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from "react";
 import '../style.css'
 import { useNavigate } from 'react-router-dom'
+import {usePopup} from 'PopupProvider';
 
 function UserRepositories(){
 
     const [repos, setRepos] = useState([]);
 
+    const {handleOpenPopup} = usePopup();
+
     useEffect(() => {
         async function fetchRepos(){
-            const response = await fetch("http://localhost:8080/github/repos",{
-                method: "GET",
-                credentials: "include"
-            })
-
-            if(response.ok){
-                const data = await response.json();
-                setRepos(data);
-            }else{
-                console.error(response.status)
+            try{
+                const response = await fetch("http://localhost:8080/github/repos",{
+                    method: "GET",
+                    credentials: "include"
+                })
+    
+                if(response.ok){
+                    const data = await response.json();
+                    setRepos(data);
+                }
+            }catch(error){
+                handleOpenPopup("error", "Could not load your repositories from github")
             }
+
         }
         fetchRepos();
-    }, [])//might want to add user here?
+    }, [])
 
     function displayRepositories(){
         return repos.map((value) => {
@@ -43,15 +49,20 @@ function UserRepositories(){
     const navigate = useNavigate();
 
     async function CreateReadmeUsingGithub(owner, repo){
-        const response = await fetch(`http://localhost:8080/readme/github/${owner}/${repo}`,{
-            method: "POST",
-            credentials: "include"
-        })
-
-        if(response.ok){
-            const readmeId = await response.json();
-            navigate("/editor", { state: { readmeId: readmeId } })
+        try{
+            const response = await fetch(`http://localhost:8080/readme/github/${owner}/${repo}`,{
+                method: "POST",
+                credentials: "include"
+            })
+    
+            if(response.ok){
+                const readmeId = await response.json();
+                navigate("/editor", { state: { readmeId: readmeId } })
+            }
+        }catch(error){
+            handleOpenPopup("error", "Could not create readme using your github repository, try again.")
         }
+
     }
 
 
@@ -62,15 +73,20 @@ function UserRepositories(){
     }
 
     async function CreateEmptyReadme(){
-        const response = await fetch("http://localhost:8080/readme/empty", {
-            method: "POST",
-            credentials: "include"
-        })
-
-        if(response.ok){
-            const readmeId = await response.json();
-            navigate("/editor", { state: { readmeId: readmeId } })
+        try{
+            const response = await fetch("http://localhost:8080/readme/empty", {
+                method: "POST",
+                credentials: "include"
+            })
+    
+            if(response.ok){
+                const readmeId = await response.json();
+                navigate("/editor", { state: { readmeId: readmeId } })
+            }
+        }catch(error){
+            handleOpenPopup("error", "Could not create empty repository, try again.")
         }
+
     }
 
     return (

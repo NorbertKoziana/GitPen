@@ -4,6 +4,7 @@ import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import 'github-markdown-css'
 import { useLocation } from 'react-router-dom';
+import {usePopup} from 'PopupProvider';
 
 function EditorPage(){
     const [editorInput, setEditorInput] = useState("");
@@ -14,6 +15,8 @@ function EditorPage(){
 
     const location = useLocation().state;
     const readmeId = location ? location.readmeId : null;
+
+    const {handleOpenPopup} = usePopup();
 
     useEffect(() => {
         async function fetchData(){
@@ -27,22 +30,27 @@ function EditorPage(){
                 localStorage.setItem("editorInput", editorInput);
             }
 
-            const response = await fetch("http://localhost:8080/github/markdown",{
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({text: editorInput}),
-                credentials: "include"
-            })
-
-            if(response.ok){
-                const data = await response.text();
-                setNotePreview(data);
-            }else{
-                console.log("Something went wrong, using marked instead of github API.")
-                setNotePreview(marked.parse(editorInput).toString())
+            try{
+                const response = await fetch("http://localhost:8080/github/markdown",{
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({text: editorInput}),
+                    credentials: "include"
+                })
+    
+                if(response.ok){
+                    const data = await response.text();
+                    setNotePreview(data);
+                }else{
+                    handleOpenPopup("warning", "Something went wrong, using marked library instead of github API. Results may differ a bit when you paste them into github.")
+                    setNotePreview(marked.parse(editorInput).toString())
+                }
+            }catch(error){
+                handleOpenPopup("error", "Could not generate preview, try again later.")
             }
+
 
         }
         const timeoutId = setTimeout(fetchData, 1000);
@@ -63,17 +71,20 @@ function EditorPage(){
      
     useEffect(() => {
         async function fetchData(){
-            const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
-                method: "GET",
-                credentials: "include",
-            })
-
-            if(response.ok){
-                const data = await response.text();
-                setEditorInput(data);
-            }else{
-                console.log("Something went wrong, could not load readme from database.")
+            try{
+                const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
+                    method: "GET",
+                    credentials: "include",
+                })
+    
+                if(response.ok){
+                    const data = await response.text();
+                    setEditorInput(data);
+                }
+            }catch(error){
+                handleOpenPopup("error", "Could not load readme from database, try again.")
             }
+
         }
         if(readmeId === null){
             const savedInput = localStorage.getItem("editorInput");
@@ -88,20 +99,26 @@ function EditorPage(){
         if(changesSaved)
             return;
 
-        const response = await fetch(`http://localhost:8080/readme/${readmeId}/update`,{
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({content: editorInput})
-        })
-
-        if(response.ok){
-            setChangesSaved(true);
-        }else{
-            console.log("Readme wasn't saved, try again.")
+        try{
+            const response = await fetch(`http://localhost:8080/readme/${readmeId}/update`,{
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({content: editorInput})
+            })
+    
+            if(response.ok){
+                setChangesSaved(true);
+                handleOpenPopup("success", "Your progress was saved.")
+            }else{
+                throw new Error();
+            }
+        }catch(error){
+            handleOpenPopup("error", "Could not save your progress, try again.")
         }
+
     }
 
     function generateUpdateButton(){

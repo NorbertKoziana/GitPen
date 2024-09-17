@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../style.css'
-import useAuth from '../UseAuth'
+import {useAuth} from '../UserProvider'
+import {usePopup} from '../PopupProvider';
 
 function Limit(){
 
@@ -8,15 +9,24 @@ function Limit(){
 
     const { user } = useAuth();
 
+    const {handleOpenPopup} = usePopup();
+
     useEffect(() => {
         async function getLimit(){
-            const response = await fetch("http://localhost:8080/github/limit",{
-                method: "GET",
-                credentials: "include",
-            })
-            
-            const limit = await response.json();
-            setLimit(limit.rate.remaining)
+            try{
+                const response = await fetch("http://localhost:8080/github/limit",{
+                    method: "GET",
+                    credentials: "include",
+                })
+                
+                if(response.ok){
+                    const limit = await response.json();
+                    setLimit(limit.rate.remaining)
+                }
+            }catch(error){
+                handleOpenPopup("error", "Could not fetch your limit.")
+            }
+
         }
         getLimit();
     }
