@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.List;
 @RestController
@@ -18,10 +19,13 @@ public class ReadmeController {
     private final ReadmeService readmeService;
 
     @PostMapping("/github/{owner}/{repo}")
-    public Integer createReadmeFromGithub
-            (Authentication authentication, @PathVariable String owner, @PathVariable String repo)
+    public ResponseEntity<Integer> createReadmeFromGithub(Authentication authentication, @PathVariable String owner, @PathVariable String repo)
     {
-        return readmeService.createReadmeFromGithub(authentication, owner, repo);
+        try{
+            return new ResponseEntity<>(readmeService.createReadmeFromGithub(authentication, owner, repo), HttpStatus.OK);
+        }catch(WebClientResponseException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/empty")

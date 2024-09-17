@@ -58,6 +58,8 @@ function UserRepositories(){
             if(response.ok){
                 const readmeId = await response.json();
                 navigate("/editor", { state: { readmeId: readmeId } })
+            }else if(response.status == 404){
+                handleOpenPopup("info", "Could not find your readme, check if readme.md exists in your repository.")
             }
         }catch(error){
             handleOpenPopup("error", "Could not create readme using your github repository, try again.")

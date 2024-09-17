@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.LocalDateTime;
 
@@ -37,7 +38,6 @@ public class ReadmeServiceImpl implements ReadmeService{
 
     @Override
     public Integer createReadmeFromGithub(Authentication authentication, String owner, String repo) {
-
         String userReadme = gitHubApiService.getRepositoryReadme(authentication, owner, repo).block();
 
         return createReadmeForAuthenticatedUser(authentication, userReadme);
