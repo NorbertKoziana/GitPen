@@ -18,6 +18,21 @@ function EditorPage(){
 
     const {handleOpenPopup} = usePopup();
 
+    const textareaSelection = useRef({
+        start: null,
+        end: null
+    })
+
+    useEffect(() => {
+        let textarea = document.querySelector(".editor-input");
+        if(textareaSelection.current.start !== null){
+            textarea.focus();
+            textarea.setSelectionRange(textareaSelection.current.start, textareaSelection.current.end)
+            textareaSelection.current.start = null;
+        }
+
+    }, [editorInput])
+
     useEffect(() => {
         async function fetchData(){
             if(!firstRender.current){
@@ -129,13 +144,55 @@ function EditorPage(){
         )
     }
 
+    function addBold(){
+        let textarea = document.querySelector(".editor-input");
+
+        let before = textarea.value.slice(0, textarea.selectionStart);
+        let selected = textarea.value.slice(textarea.selectionStart, textarea.selectionEnd);
+        let after = textarea.value.slice(textarea.selectionEnd, textarea.value.length);
+
+        textareaSelection.current.start = textarea.selectionStart;
+        textareaSelection.current.end = textarea.selectionEnd + 2;
+      
+        setEditorInput(before + "*" + selected + "*" + after)
+    }
+
+    function addCollapsableItems(){
+        let textarea = document.querySelector(".editor-input");
+
+        let before = textarea.value.slice(0, textarea.selectionStart);
+
+        let generated = 
+`<details>
+  <summary>Markdown</summary>
+
+- <kbd>[Markdown Editor](https://binarytree.dev/me)</kbd>
+- <kbd>[Table Of Content](https://binarytree.dev/toc)</kbd>
+- <kbd>[Markdown Table Generator](https://binarytree.dev/md_table_generator)</kbd>
+
+</details>`
+
+        let after = textarea.value.slice(textarea.selectionStart, textarea.value.length);
+
+        textareaSelection.current.start = textarea.selectionStart;
+        textareaSelection.current.end = textarea.selectionStart + generated.length;
+      
+        setEditorInput(before + generated + after)
+    }
+
+    console.log(textareaSelection.current)
+
     return (
         <>
             {location && generateUpdateButton()}
             <div className='editor-page'>
-                <form className='editor-form' onSubmit={e => e.preventDefault()}>
-                    <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} />
-                </form>
+                <div className='editor-form'>
+                    <p onClick={addBold}>BOLD</p>
+                    <p onClick={addCollapsableItems}>Collapsable</p>
+                    <form onSubmit={e => e.preventDefault()}>
+                        <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} />
+                    </form>
+                </div>
                 <div className='editor-preview markdown-body'
                     dangerouslySetInnerHTML={markup}    
                 />
