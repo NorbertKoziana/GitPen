@@ -18,20 +18,12 @@ function EditorPage(){
 
     const {handleOpenPopup} = usePopup();
 
-    const textareaSelection = useRef({
+    const textareaRef = useRef(null);
+
+    const textareaSelection = useRef({//to moge przechowywac w stanie i zmieniac stan w onselect
         start: null,
         end: null
     })
-
-    useEffect(() => {
-        let textarea = document.querySelector(".editor-input");
-        if(textareaSelection.current.start !== null){
-            textarea.focus();
-            textarea.setSelectionRange(textareaSelection.current.start, textareaSelection.current.end)
-            textareaSelection.current.start = null;
-        }
-
-    }, [editorInput])
 
     useEffect(() => {
         async function fetchData(){
@@ -145,7 +137,7 @@ function EditorPage(){
     }
 
     function addBold(){
-        let textarea = document.querySelector(".editor-input");
+        const textarea = textareaRef.current;
 
         let before = textarea.value.slice(0, textarea.selectionStart);
         let selected = textarea.value.slice(textarea.selectionStart, textarea.selectionEnd);
@@ -158,7 +150,7 @@ function EditorPage(){
     }
 
     function addCollapsableItems(){
-        let textarea = document.querySelector(".editor-input");
+        const textarea = textareaRef.current;
 
         let before = textarea.value.slice(0, textarea.selectionStart);
 
@@ -180,7 +172,16 @@ function EditorPage(){
         setEditorInput(before + generated + after)
     }
 
-    console.log(textareaSelection.current)
+    useEffect(() => {
+        const textarea = textareaRef.current;
+        
+        if(textareaSelection.current.start !== null){
+            textarea.focus();
+            textarea.setSelectionRange(textareaSelection.current.start, textareaSelection.current.end)
+            textareaSelection.current.start = null;
+        }
+
+    }, [editorInput])
 
     return (
         <>
@@ -190,7 +191,7 @@ function EditorPage(){
                     <p onClick={addBold}>BOLD</p>
                     <p onClick={addCollapsableItems}>Collapsable</p>
                     <form onSubmit={e => e.preventDefault()}>
-                        <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} />
+                        <textarea className='editor-input' name='editor' value={editorInput} onChange={handleFormChange} ref={textareaRef} />
                     </form>
                 </div>
                 <div className='editor-preview markdown-body'
