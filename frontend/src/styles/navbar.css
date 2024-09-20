@@ -7,7 +7,7 @@
     justify-content: space-evenly;
 }
 
-.navbar a:not(.logo-link) {
+.navbar a {
     color: rgb(60, 60, 60);
     padding: 8px 20px;
     border-radius: 8px;
@@ -16,20 +16,25 @@
     box-shadow: rgb(231, 236, 240) 0px 0px 0px 0px;
 }
 
-.navbar a:not(.logo-link):hover{
+.navbar a:hover{
     background-color: #f1f1f1;
     color: black;
 }
 
-.navbar a:not(.logo-link).active {
+.navbar a.active {
     color: rgb(255, 255, 255);
     background-color: #1D1D1D;
 }
 
-.navbar a:not(.logo-link).active:hover {
+.navbar a.active:hover {
     opacity: 0.8;
 }
 
 .navbar .logo{
-    height: 40px;
+    height: 35px;
+    padding-right: 10px;
+}
+
+.navbar .logo-link{
+    padding: 2px 0;
 }

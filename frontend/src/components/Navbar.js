@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import '../style.css';
 import {useAuth} from '../UserProvider'
 import '../styles/navbar.css'
-import logo from '../images/logo.png';
+import blackLogo from '../images/logo_black.png';
+import whiteLogo from '../images/logo_white.png';
 
 function Navbar(){
 
@@ -59,7 +60,11 @@ function Navbar(){
                     isPending ? "logo-link pending" : isActive ? "logo-link active" : "logo-link"
                 }
                 >
-                <img src={logo} alt='logo' className='logo'/>
+                {({ isActive }) => (
+                    isActive ? 
+                    <img src={whiteLogo} alt='logo' className='logo'/> : 
+                    <img src={blackLogo} alt='logo' className='logo'/>
+                )}
             </NavLink>
             <NavLink to="/editor"
                 className={({ isActive, isPending }) =>
