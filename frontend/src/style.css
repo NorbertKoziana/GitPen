@@ -8,20 +8,9 @@ a{
   color: white;
 }
 
-.navbar, .footer, .login, .register, .home-page, .error-page, .editor-page, .signup{
+.footer, .login, .register, .home-page, .error-page, .editor-page, .signup{
   width: 100%;
   min-height: 200px;
-}
-
-.navbar{
-  background-color:blue;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.navbar-logout{
-  cursor: pointer;
 }
 
 .footer{

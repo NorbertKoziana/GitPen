@@ -2,6 +2,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import '../style.css';
 import {useAuth} from '../UserProvider'
+import '../styles/navbar.css'
+import logo from '../images/logo.png';
 
 function Navbar(){
 
@@ -38,9 +40,14 @@ function Navbar(){
                     >
                     Display your readmes
                 </NavLink>
-                <div className='navbar-logout' onClick={logout}>
+                <NavLink to="#"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    onClick={logout}
+                    >
                     Logout
-                </div>
+                </NavLink>
             </>
         )
     }
@@ -49,10 +56,10 @@ function Navbar(){
         <div className='navbar'>
             <NavLink to="/"
                 className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
+                    isPending ? "logo-link pending" : isActive ? "logo-link active" : "logo-link"
                 }
                 >
-                Homepage
+                <img src={logo} alt='logo' className='logo'/>
             </NavLink>
             <NavLink to="/editor"
                 className={({ isActive, isPending }) =>

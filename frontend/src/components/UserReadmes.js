@@ -22,6 +22,7 @@ function UserReadmes(){
                     credentials: "include"
                 });
 
+                console.log(response.status)
                 if(response.ok){
                     const readmes = await response.json();
                     setReadmes(readmes);
