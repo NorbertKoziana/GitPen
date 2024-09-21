@@ -1,0 +1,24 @@
+.readme{
+  display: block;
+  margin: 15px;
+  cursor: pointer;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border: 2px solid black;
+}
+
+.readme-preview{
+  display: flex;
+  justify-content: center;
+}
+
+#small-readme-preview{
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.black-button{
+  margin: 20px;
+}

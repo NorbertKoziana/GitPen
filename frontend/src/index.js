@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from './components/ErrorPage';
 import HomePage from './components/HomePage';
 import EditorPage from './components/EditorPage';
-import Signup from 'components/Signup';
+import SignIn from 'components/SignIn';
 import UserRepositories from 'components/UserRepositories';
 import UserReadmes from 'components/UserReadmes';
 import { StyledEngineProvider } from '@mui/material/styles';
@@ -29,8 +29,8 @@ function Root(){
           element: <EditorPage />
         },
         {
-          path: "signup",
-          element: <Signup />
+          path: "signin",
+          element: <SignIn />
         },
         {
           path: "repos",

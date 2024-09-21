@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import {usePopup} from 'PopupProvider';
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import {collapsible, table} from './MarkdownEditorCustomToolbar'
+import '../styles/editor.css'
 
 function EditorPage(){
     const [editorInput, setEditorInput] = useState("");

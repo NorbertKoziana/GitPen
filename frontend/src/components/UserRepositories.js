@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import '../style.css'
 import { useNavigate } from 'react-router-dom'
 import {usePopup} from 'PopupProvider';
+import '../styles/user-repositories.css'
+import Divider from '@mui/material/Divider';
 
 function UserRepositories(){
 
@@ -35,12 +37,12 @@ function UserRepositories(){
             return (
             <div className={`repo ${selectedClass}`} key={value.id}
             >
-                <p>{value.name}</p>
+                <h3>{value.name}</h3>
                 <p className="clickable" onClick={() => CreateReadmeUsingGithub(value.owner.login, value.name)}>
-                    Create new readme starting with your current readme.
+                    Click here to create new readme starting with your current readme.
                 </p>
                 <p className="clickable" onClick={() => CreateReadmeUsingAi(value.owner.login, value.name)}>
-                    Use AI to create readme for you without any effort.
+                    Click here to use AI to create readme based on your prompt and repository content.
                 </p>
             </div>)
         });
@@ -58,7 +60,7 @@ function UserRepositories(){
             if(response.ok){
                 const readmeId = await response.json();
                 navigate("/editor", { state: { readmeId: readmeId } })
-            }else if(response.status == 404){
+            }else if(response.status === 404){
                 handleOpenPopup("info", "Could not find your readme, check if readme.md exists in your repository.")
             }
         }catch(error){
@@ -70,8 +72,7 @@ function UserRepositories(){
 
     //To be implemented
     async function CreateReadmeUsingAi(owner, repo){
-        let repoId = 1;
-        navigate("/editor", { state: { repoId } })
+        handleOpenPopup("info", "This function is not implemented yet.")
     }
 
     async function CreateEmptyReadme(){
@@ -93,11 +94,14 @@ function UserRepositories(){
 
     return (
         <div className="user-repositories">
-            <div className="new-readme-button" onClick={CreateEmptyReadme}>
-                Create new empty readme.
+            <div className="new-readme-button black-button" onClick={CreateEmptyReadme}>
+                Start with empty readme
             </div>
+            <Divider flexItem >
+                or create readme based on your existing repository
+            </Divider>
             <h3 className="permission-prompt">
-                If you dont see your repository change its visibility to public or install app on the desired repository by clicking the link: 
+                If you dont see your repository change its visibility to public or install app on the desired private repository by clicking the link:  
                 <a href="https://github.com/apps/gitpen-v1/installations/new">INSTALL</a>
             </h3>
             <div className="repositories-container">

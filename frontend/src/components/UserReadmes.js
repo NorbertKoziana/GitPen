@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReadmePreview from './ReadmePreview';
 import {usePopup} from '../PopupProvider'
+import '../styles/user-readmes.css'
 
 function UserReadmes(){
 
@@ -72,12 +73,12 @@ function UserReadmes(){
 
     return (
         <div className='UserReadmes'>
-            <h2 className='prev-page-button' onClick={prevPage}>
+            <div className='black-button' onClick={prevPage}>
                 Prev Page
-            </h2>
-            <h2 className='next-page-button' onClick={nextPage}>
+            </div>
+            <div className='black-button' onClick={nextPage}>
                 Next Page
-            </h2>
+            </div>
             <div className='readme-container'>
                 {renderReadmes()}
             </div>

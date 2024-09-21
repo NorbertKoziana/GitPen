@@ -10,15 +10,15 @@ function Navbar(){
 
     const { user, logout } = useAuth();
 
-    function renderSignup(){
+    function renderSignin(){
         return (
             <>
-                <NavLink to="/signup"
+                <NavLink to="/signin"
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
                     }
                     >
-                    Sign up
+                    Sign in
                 </NavLink>
             </>
         )
@@ -41,14 +41,9 @@ function Navbar(){
                     >
                     Display your readmes
                 </NavLink>
-                <NavLink to="#"
-                    className={({ isActive, isPending }) =>
-                        isPending ? "pending" : isActive ? "active" : ""
-                    }
-                    onClick={logout}
-                    >
+                <a href="#" onClick={logout}>
                     Logout
-                </NavLink>
+                </a>
             </>
         )
     }
@@ -73,7 +68,7 @@ function Navbar(){
                 >
                 Editor
             </NavLink>
-            {user ? renderLogout() : renderSignup()}
+            {user ? renderLogout() : renderSignin()}
         </div>
     )
 }

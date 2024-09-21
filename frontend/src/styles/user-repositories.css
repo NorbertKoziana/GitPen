@@ -1,0 +1,37 @@
+.user-repositories{
+  min-height: 300px;
+  padding: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+  
+.private-repo{
+  color: red;
+}
+
+.public-repo{
+  color: chartreuse;
+}
+
+.repo{
+  padding: 12px 20px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 5px rgb(240, 240, 240);
+  border-radius: 6px;
+  margin: 15px 20px;
+}
+
+.permission-prompt{
+  text-align: center;
+}
+
+.clickable{
+  cursor: pointer;
+  user-select: none;
+}
+
+.new-readme-button{
+  margin-bottom: 16px;
+}

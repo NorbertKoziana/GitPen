@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  background-color: #F8F9FA;
 }
 
 a{
@@ -8,67 +9,13 @@ a{
   color: white;
 }
 
-.footer, .login, .register, .home-page, .error-page, .editor-page, .signup{
+.error-page{
   width: 100%;
   min-height: 200px;
 }
 
-.footer{
-  background-color:forestgreen;
-}
-
-.login{
-  background-color:crimson
-}
-
-.register{
-  background-color:darkorange
-}
-
-.home-page{
-  background-color:indigo;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  font-size: 21px;
-  color: white;
-}
-
-.home-page .limit{
-  margin-top: 20px;
-}
-
 .error-page{
   background-color: deeppink;
-}
-
-.editor-page{
-  background-color:darkturquoise;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.editor-form{
-  margin: 20px 40px;
-  width: 100%;
-  max-width: 50%;
-}
-
-.editor-input{
-  width: 100%;
-  min-width: 450px;
-  min-height: 400px;
-  background-color: beige;
-  resize: horizontal;
-}
-
-.note-menu-elem{
-  cursor: pointer;
-  margin: 4px 0;
-  background-color: brown;
-  user-select: none;
 }
 
 a.active{
@@ -80,112 +27,16 @@ h1{
   padding: 10px 0;
 }
 
-.signup{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-github-button{
-  padding: 8px 12px;
-  background-color: rgb(0, 236, 153);
-  font-size: 21px;
-  letter-spacing: 0.7px;
-  border-radius: 8px;
-  color: black;
-  font-weight: 700;
-}
-
-.user-repositories{
-  min-height: 300px;
-  background-color: rgb(155, 192, 216);
-  padding: 30px;
-}
-
-.private-repo{
-  color: red;
-}
-
-.public-repo{
-  color: chartreuse;
-}
-
-.repo{
-  padding: 12px 20px;
-  background-color: rgb(100, 133, 122);
-  border-radius: 6px;
-  margin: 15px 20px;
-}
-
-.permission-prompt{
-  background-color: rgb(155, 192, 216);
-  margin: 0;
-}
-
-.clickable{
+.black-button{
   cursor: pointer;
-}
-
-.new-readme-button, .prev-page-button, .next-page-button{
-  cursor: pointer;
-  margin-bottom: 10px;
   padding: 12px 20px;
-  background-color: rgb(234, 255, 1);
+  background-color: #212529;
   border-radius: 6px;
+  color: white;
   display: inline-block;
-}
-
-.next-page-button, .prev-page-button{
-  margin: 20px;
   user-select: none;
 }
 
-.readme{
-  display: block;
-  margin: 15px;
-  cursor: pointer;
-  padding: 12px 20px;
-  border-radius: 6px;
-  border: 2px solid black;
-}
-
-.update-readme-button{
-  padding: 12px 20px;
-  cursor: pointer;
-}
-
-.update-readme-button.saved{
-  background-color: rgb(140, 255, 0);
-}
-
-.update-readme-button.not-saved{
-  background-color: rgb(229, 14, 14);
-}
-
-.readme-preview{
-  display: flex;
-  justify-content: center;
-}
-
-#small-readme-preview{
-  max-height: 400px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 100%;
-}
-
-.markdown-body {
-  box-sizing: border-box;
-  min-width: 400px;
-  max-width: 894px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 32px;
-  background-color: white;
-}
-
-@media (max-width: 767px) {
-  .markdown-body {
-    padding: 15px;
-  }
+.black-button:hover{
+  opacity: 0.8;
 }

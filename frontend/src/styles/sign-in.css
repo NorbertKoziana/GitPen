@@ -1,0 +1,39 @@
+.sign-in{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 70px 0;
+}
+
+.container-sign-in{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+  padding: 110px;
+  background-color: rgb(255,255,255);
+  border-radius: 20px;
+  width: 20%;
+  box-shadow: 0px 0px 10px 5px rgb(240, 240, 240);
+}
+
+.login-github-button{
+  padding: 0px 6px;
+  background-color: #DEE2E6;
+  font-size: 17px;
+  letter-spacing: 0.7px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lock{
+  height: 45px;
+}
+
+.github-link{
+  height: 40px;
+  margin: 0;
+}

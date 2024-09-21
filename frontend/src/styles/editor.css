@@ -1,0 +1,58 @@
+.md-editor, .editor-preview{
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.editor-page{
+  background-color:#E9ECEF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 30px;
+  gap: 30px;
+}
+  
+.editor-form, .editor-preview{
+  flex: 1;
+  min-width: 150px;
+}
+  
+.editor-input{
+  width: 100%;
+  min-height: 400px;
+}
+
+.markdown-body {
+  box-sizing: border-box;
+  max-width: 894px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px;
+  background-color: white;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+
+.update-readme-button{
+  position: sticky;
+  top: 61px;
+  z-index: 100;
+  text-align: center;
+}
+
+.update-readme-button{
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+.update-readme-button.saved{
+  background-color: rgb(140, 255, 0);
+}
+
+.update-readme-button.not-saved{
+  background-color: rgb(229, 14, 14);
+}

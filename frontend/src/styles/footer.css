@@ -1,0 +1,29 @@
+.footer{
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(255,255,255);
+}
+
+.footer .logo{
+  height: 100px;
+  margin-right: 33px;
+}
+
+.github-link{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.paragraph-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-link > img{
+  margin-left: 3px;
+}

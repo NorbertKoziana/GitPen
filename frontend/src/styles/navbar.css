@@ -1,40 +1,44 @@
 .navbar{
-    height: 60px;
-    background-color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(245, 245, 245);
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  height: 60px;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(245, 245, 245);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0px 3px 15px rgb(220, 220, 220);
 }
 
 .navbar a {
-    color: rgb(60, 60, 60);
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    transition: opacity 0.2s, background-color 0.2s, color 0.2s;
-    box-shadow: rgb(231, 236, 240) 0px 0px 0px 0px;
+  color: rgb(60, 60, 60);
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+  box-shadow: rgb(231, 236, 240) 0px 0px 0px 0px;
 }
 
 .navbar a:hover{
-    background-color: #f1f1f1;
-    color: black;
+  background-color: #f1f1f1;
+  color: black;
 }
 
 .navbar a.active {
-    color: rgb(255, 255, 255);
-    background-color: #1D1D1D;
+  color: rgb(255, 255, 255);
+  background-color: #1D1D1D;
 }
 
 .navbar a.active:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .navbar .logo{
-    height: 35px;
-    padding-right: 10px;
+  height: 35px;
+  padding-right: 10px;
 }
 
 .navbar .logo-link{
-    padding: 2px 0;
+  padding: 2px 0;
 }
