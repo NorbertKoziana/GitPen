@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react'
 import '../style.css';
 import DOMPurify from 'dompurify';
-import { marked } from 'marked';
 import 'github-markdown-css'
 import { useLocation } from 'react-router-dom';
 import {usePopup} from 'PopupProvider';
 import MarkdownEditor from "@uiw/react-markdown-editor";
 import {collapsible, table} from './MarkdownEditorCustomToolbar'
 import '../styles/editor.css'
+import axios from 'axios';
 
 function EditorPage(){
     const [editorInput, setEditorInput] = useState("");
@@ -33,25 +33,20 @@ function EditorPage(){
                 localStorage.setItem("editorInput", editorInput);
             }
 
-            try{
-                const response = await fetch("http://localhost:8080/github/markdown",{
-                    method: "POST",
+            try {
+                const response = await axios.post('http://localhost:8080/github/markdown',
+                { text: editorInput },
+                {
                     headers: {
-                      "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({text: editorInput}),
-                    credentials: "include"
-                })
-    
-                if(response.ok){
-                    const data = await response.text();
-                    setNotePreview(data);
-                }else{
-                    handleOpenPopup("warning", "Something went wrong, using marked library instead of github API. Results may differ a bit when you paste them into github.")
-                    setNotePreview(marked.parse(editorInput).toString())
-                }
-            }catch(error){
-                handleOpenPopup("error", "Could not generate preview, try again later.")
+                    withCredentials: true,
+                    withXSRFToken: true
+                });
+            
+                setNotePreview(response.data);
+            } catch (error) {
+              handleOpenPopup('error', 'Could not generate preview, try again later.');
             }
 
 
@@ -71,15 +66,11 @@ function EditorPage(){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await fetch(`http://localhost:8080/readme/${readmeId}/user/me/`,{
-                    method: "GET",
-                    credentials: "include",
+                const response = await axios.get(`http://localhost:8080/readme/${readmeId}/user/me/`,{
+                    withCredentials: true
                 })
     
-                if(response.ok){
-                    const data = await response.text();
-                    setEditorInput(data);
-                }
+                setEditorInput(response.data.toString());
             }catch(error){
                 handleOpenPopup("error", "Could not load readme from database, try again.")
             }
@@ -99,21 +90,18 @@ function EditorPage(){
             return;
 
         try{
-            const response = await fetch(`http://localhost:8080/readme/${readmeId}/update`,{
-                method: "PATCH",
+            const response = await axios.patch(`http://localhost:8080/readme/${readmeId}/update`,
+            {content: editorInput},
+            {
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
                 },
-                credentials: "include",
-                body: JSON.stringify({content: editorInput})
-            })
+                withCredentials: true,
+                withXSRFToken: true
+            });
     
-            if(response.ok){
-                setChangesSaved(true);
-                handleOpenPopup("success", "Your progress was saved.")
-            }else{
-                throw new Error();
-            }
+            setChangesSaved(true);
+            handleOpenPopup("success", "Your progress was saved.")
         }catch(error){
             handleOpenPopup("error", "Could not save your progress, try again.")
         }

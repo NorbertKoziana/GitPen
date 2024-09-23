@@ -4,6 +4,7 @@ import '../style.css'
 import DOMPurify from 'dompurify';
 import 'github-markdown-css'
 import {usePopup} from '../PopupProvider'
+import axios from 'axios'
 
 function ReadmePreview(props){
 
@@ -21,19 +22,17 @@ function ReadmePreview(props){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await fetch("http://localhost:8080/github/markdown",{
-                    method: "POST",
+                const response = await axios.post("http://localhost:8080/github/markdown",
+                {text: content},
+                {
                     headers: {
                       "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({text: content}),
-                    credentials: "include"
+                    withCredentials: true,
+                    withXSRFToken: true
                 })
     
-                if(response.ok){
-                    const data = await response.text();
-                    setReadmePreview(data);
-                }
+                setReadmePreview(response.data);
             }catch(error){
                 handleOpenPopup("info", "Could not generate preview for your readmes")
             }

@@ -5,6 +5,7 @@ import {usePopup} from 'PopupProvider';
 import '../styles/user-repositories.css'
 import Divider from '@mui/material/Divider';
 import githubInstall from '../images/github_install.png'
+import axios from 'axios'
 
 function UserRepositories(){
 
@@ -15,15 +16,11 @@ function UserRepositories(){
     useEffect(() => {
         async function fetchRepos(){
             try{
-                const response = await fetch("http://localhost:8080/github/repos",{
-                    method: "GET",
-                    credentials: "include"
+                const response = await axios.get("http://localhost:8080/github/repos",{
+                    withCredentials: true
                 })
     
-                if(response.ok){
-                    const data = await response.json();
-                    setRepos(data);
-                }
+                setRepos(response.data);
             }catch(error){
                 handleOpenPopup("error", "Could not load your repositories from github")
             }
@@ -53,21 +50,20 @@ function UserRepositories(){
 
     async function CreateReadmeUsingGithub(owner, repo){
         try{
-            const response = await fetch(`http://localhost:8080/readme/github/${owner}/${repo}`,{
-                method: "POST",
-                credentials: "include"
+            const response = await axios.post(`http://localhost:8080/readme/github/${owner}/${repo}`,
+            null,
+            {
+                withCredentials: true,
+                withXSRFToken: true
             })
     
-            if(response.ok){
-                const readmeId = await response.json();
-                navigate("/editor", { state: { readmeId: readmeId } })
-            }else if(response.status === 404){
-                handleOpenPopup("info", "Could not find your readme, check if readme.md exists in your repository.")
-            }
+            navigate("/editor", { state: { readmeId: response.data } })
         }catch(error){
-            handleOpenPopup("error", "Could not create readme using your github repository, try again.")
+            if(error.status === 404)
+                handleOpenPopup("info", "Could not find your readme, check if readme.md exists in your repository.")
+            else
+                handleOpenPopup("error", "Could not create readme using your github repository, try again.")
         }
-
     }
 
 
@@ -78,19 +74,17 @@ function UserRepositories(){
 
     async function CreateEmptyReadme(){
         try{
-            const response = await fetch("http://localhost:8080/readme/empty", {
-                method: "POST",
-                credentials: "include"
+            const response = await axios.post("http://localhost:8080/readme/empty",
+            null,
+            {
+                withCredentials: true,
+                withXSRFToken: true
             })
     
-            if(response.ok){
-                const readmeId = await response.json();
-                navigate("/editor", { state: { readmeId: readmeId } })
-            }
+            navigate("/editor", { state: { readmeId: response.data } })
         }catch(error){
             handleOpenPopup("error", "Could not create empty repository, try again.")
         }
-
     }
 
     return (

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ReadmePreview from './ReadmePreview';
 import {usePopup} from '../PopupProvider'
 import '../styles/user-readmes.css'
+import axios from 'axios'
 
 function UserReadmes(){
 
@@ -14,20 +15,15 @@ function UserReadmes(){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await fetch("http://localhost:8080/readme/all/user/me?" + 
+                const response = await axios.get("http://localhost:8080/readme/all/user/me?" + 
                     new URLSearchParams({
                         pageNumber: page.toString()
                     }).toString(),
                 {
-                    method: "GET",
-                    credentials: "include"
+                    withCredentials: true
                 });
 
-                console.log(response.status)
-                if(response.ok){
-                    const readmes = await response.json();
-                    setReadmes(readmes);
-                }
+                setReadmes(response.data);
             }catch(error){
                 handleOpenPopup("error", "Could not load your readmes.")
             }

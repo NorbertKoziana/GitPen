@@ -1,6 +1,7 @@
 import {useState, useEffect, createContext, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "PopupProvider";
+import axios from 'axios';
 
 const UserContext = createContext();
 
@@ -17,16 +18,32 @@ export default function UserProvider({children}){
     const {handleOpenPopup} = usePopup();
 
     const logout = async () => {
-        const response = await fetch("http://localhost:8080/auth/logout",{
-            method: "POST",
-            credentials: "include",
-        })
+      try{
+        const response = await axios.post(
+          "http://localhost:8080/auth/logout",
+          null,
+          {
+            withCredentials: true,
+            withXSRFToken: true
+        });
 
-        if(response.ok){
-            setUser(null);
-            navigate("/");
-        }
+        setUser(null);
+        navigate("/");
+      }catch(error){
+        handleOpenPopup("error", "Could not log you out, try again.")
+      }
     }
+
+    useEffect(() => {
+      axios.interceptors.response.use(function (response) {
+        return response;
+      }, function (error) {
+        if(error.status === 401){
+          logout()
+        }
+        return Promise.reject(error);
+      });
+    }, [])
 
     useEffect(() => {
         const fetchUserInfo = async () => {

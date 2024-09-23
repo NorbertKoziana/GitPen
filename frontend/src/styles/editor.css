@@ -47,6 +47,7 @@
 .update-readme-button{
   padding: 12px 20px;
   cursor: pointer;
+  user-select: none;
 }
 
 .update-readme-button.saved{

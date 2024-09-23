@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../style.css'
 import {useAuth} from '../UserProvider'
 import {usePopup} from '../PopupProvider';
+import axios from 'axios'
 
 function Limit(){
 
@@ -14,15 +15,11 @@ function Limit(){
     useEffect(() => {
         async function getLimit(){
             try{
-                const response = await fetch("http://localhost:8080/github/limit",{
-                    method: "GET",
-                    credentials: "include",
-                })
+                const response = await axios.get("http://localhost:8080/github/limit",{
+                    withCredentials: true,
+                });
                 
-                if(response.ok){
-                    const limit = await response.json();
-                    setLimit(limit.rate.remaining)
-                }
+                setLimit(response.data.rate.remaining)
             }catch(error){
                 handleOpenPopup("error", "Could not fetch your limit.")
             }
