@@ -8,13 +8,13 @@ function Footer(){
     return (
         <div className='footer'>
             <img src={logo} alt="" className='logo'/>
-            <p className='paragraph-wrapper'>
+            <div className='paragraph-wrapper'>
                 Created by: 
                 <a href="https://github.com/NorbertKoziana" target="_blank" className='github-link'>
                     <p>Norbert Koziana </p>
                     <img src={github} alt="" />
                 </a>
-            </p>
+            </div>
         </div>
     )
 }

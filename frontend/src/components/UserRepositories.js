@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {usePopup} from 'PopupProvider';
 import '../styles/user-repositories.css'
 import Divider from '@mui/material/Divider';
+import githubInstall from '../images/github_install.png'
 
 function UserRepositories(){
 
@@ -101,8 +102,10 @@ function UserRepositories(){
                 or create readme based on your existing repository
             </Divider>
             <h3 className="permission-prompt">
-                If you dont see your repository change its visibility to public or install app on the desired private repository by clicking the link:  
-                <a href="https://github.com/apps/gitpen-v1/installations/new">INSTALL</a>
+                If you don't see your repository change its visibility to public or install app on the desired private repository by clicking the icon:  
+                <a href="https://github.com/apps/gitpen-v1/installations/new">
+                    <img src={githubInstall} alt="install github" className="github-install-icon" />
+                </a>
             </h3>
             <div className="repositories-container">
                 {displayRepositories()}

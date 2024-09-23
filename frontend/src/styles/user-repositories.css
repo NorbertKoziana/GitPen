@@ -25,6 +25,8 @@
 
 .permission-prompt{
   text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .clickable{
@@ -34,4 +36,9 @@
 
 .new-readme-button{
   margin-bottom: 16px;
+}
+
+.github-install-icon{
+  height: 40px;
+  margin-left: 10px;
 }

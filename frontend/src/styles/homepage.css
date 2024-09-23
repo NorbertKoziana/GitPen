@@ -35,7 +35,7 @@ a{
   flex: 1;
 }
 
-.home-right-section p{
+.home-right-section .text{
   font-size: 15px;
   letter-spacing: 0.3px;
   font-weight: 500;

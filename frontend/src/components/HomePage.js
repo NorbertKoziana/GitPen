@@ -13,7 +13,7 @@ function HomePage(){
     function renderSignupPrompt(){
         return (
             <>
-                <p>
+                <p className='text'>
                     Sign in using github account to be able to load readmes from your repositories and save them locally.
                 </p>
                 <NavLink to="/signin" className="signin-button">
@@ -26,12 +26,12 @@ function HomePage(){
     function renderUserInfo(){
         return (
             <>
-                <p>
+                <p className='text'>
                     Your are logged in as: {user.login}
                 </p>
-                <p>
+                <div className='text'>
                     Your rate limit to github API: <Limit />
-                </p>
+                </div>
             </>
         )
     }

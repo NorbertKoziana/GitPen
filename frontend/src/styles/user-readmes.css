@@ -4,7 +4,10 @@
   cursor: pointer;
   padding: 12px 20px;
   border-radius: 6px;
-  border: 2px solid black;
+}
+
+.readme .markdown-body{
+  box-shadow: 0px 0px 10px 5px rgb(240,240,240);
 }
 
 .readme-preview{
