@@ -20,7 +20,7 @@ export default function UserProvider({children}){
     const logout = async () => {
       try{
         const response = await axios.post(
-          "http://localhost:8080/auth/logout",
+          "/auth/logout",
           null,
           {
             withCredentials: true,
@@ -48,7 +48,7 @@ export default function UserProvider({children}){
     useEffect(() => {
         const fetchUserInfo = async () => {
           try{
-            const response = await fetch("http://localhost:8080/user/info",{
+            const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/info`,{
               method: "GET",
               credentials: "include",
               redirect: "manual"

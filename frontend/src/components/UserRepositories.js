@@ -16,7 +16,7 @@ function UserRepositories(){
     useEffect(() => {
         async function fetchRepos(){
             try{
-                const response = await axios.get("http://localhost:8080/github/repos",{
+                const response = await axios.get("/github/repos",{
                     withCredentials: true
                 })
     
@@ -39,9 +39,6 @@ function UserRepositories(){
                 <p className="clickable" onClick={() => CreateReadmeUsingGithub(value.owner.login, value.name)}>
                     Click here to create new readme starting with your current readme.
                 </p>
-                <p className="clickable" onClick={() => CreateReadmeUsingAi(value.owner.login, value.name)}>
-                    Click here to use AI to create readme based on your prompt and repository content.
-                </p>
             </div>)
         });
     }
@@ -50,7 +47,7 @@ function UserRepositories(){
 
     async function CreateReadmeUsingGithub(owner, repo){
         try{
-            const response = await axios.post(`http://localhost:8080/readme/github/${owner}/${repo}`,
+            const response = await axios.post(`/readme/github/${owner}/${repo}`,
             null,
             {
                 withCredentials: true,
@@ -66,15 +63,9 @@ function UserRepositories(){
         }
     }
 
-
-    //To be implemented
-    async function CreateReadmeUsingAi(owner, repo){
-        handleOpenPopup("info", "This function is not implemented yet.")
-    }
-
     async function CreateEmptyReadme(){
         try{
-            const response = await axios.post("http://localhost:8080/readme/empty",
+            const response = await axios.post("/readme/empty",
             null,
             {
                 withCredentials: true,

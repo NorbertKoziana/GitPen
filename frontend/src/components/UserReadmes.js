@@ -15,7 +15,7 @@ function UserReadmes(){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await axios.get("http://localhost:8080/readme/all/user/me?" + 
+                const response = await axios.get("/readme/all/user/me?" + 
                     new URLSearchParams({
                         pageNumber: page.toString()
                     }).toString(),

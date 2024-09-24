@@ -15,7 +15,7 @@ function Limit(){
     useEffect(() => {
         async function getLimit(){
             try{
-                const response = await axios.get("http://localhost:8080/github/limit",{
+                const response = await axios.get("/github/limit",{
                     withCredentials: true,
                 });
                 

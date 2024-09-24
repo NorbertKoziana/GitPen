@@ -22,7 +22,7 @@ function ReadmePreview(props){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await axios.post("http://localhost:8080/github/markdown",
+                const response = await axios.post("/github/markdown",
                 {text: content},
                 {
                     headers: {

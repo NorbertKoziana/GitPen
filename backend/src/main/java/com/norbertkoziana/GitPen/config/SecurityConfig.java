@@ -5,10 +5,9 @@ import com.norbertkoziana.GitPen.csrf.SpaCsrfTokenRequestHandler;
 import com.norbertkoziana.GitPen.oauth2.CustomOAuth2UserService;
 import com.norbertkoziana.GitPen.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -32,10 +31,13 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-XSRF-TOKEN"));
@@ -66,11 +68,11 @@ public class SecurityConfig {
                         .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler()))
                 )
                 .oauth2Login((oauth2) -> oauth2
-                        .loginPage("http://localhost:3000/signup")
+                        .loginPage(frontendUrl + "/signup")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(this.oauth2UserService())
                         )
-                        .defaultSuccessUrl("http://localhost:3000", true)
+                        .defaultSuccessUrl(frontendUrl, true)
                 )
         ;
 

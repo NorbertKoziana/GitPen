@@ -11,8 +11,11 @@ import UserRepositories from 'components/UserRepositories';
 import UserReadmes from 'components/UserReadmes';
 import { StyledEngineProvider } from '@mui/material/styles';
 import PopupProvider from './PopupProvider';
+import axios from 'axios'
 
 function Root(){
+
+  axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
   const router = createBrowserRouter([
     {

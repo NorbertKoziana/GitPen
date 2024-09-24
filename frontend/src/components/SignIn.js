@@ -11,7 +11,7 @@ function Signin(){
                 <img src={lock} alt="lock" className='lock'/>
                 <h2>Sign in</h2>
                 <p>Please sign in to continue</p>
-                <a href="http://localhost:8080/oauth2/authorization/github" className='login-github-button'>
+                <a href={`${process.env.REACT_APP_BACKEND_URL}/oauth2/authorization/github`} className='login-github-button'>
                     <img src={github} alt="github" className='github-link'/>
                     <p>Sign In With GitHub</p>
                 </a>

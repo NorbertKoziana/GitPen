@@ -34,7 +34,7 @@ function EditorPage(){
             }
 
             try {
-                const response = await axios.post('http://localhost:8080/github/markdown',
+                const response = await axios.post('/github/markdown',
                 { text: editorInput },
                 {
                     headers: {
@@ -66,7 +66,7 @@ function EditorPage(){
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await axios.get(`http://localhost:8080/readme/${readmeId}/user/me/`,{
+                const response = await axios.get(`/readme/${readmeId}/user/me/`,{
                     withCredentials: true
                 })
     
@@ -90,7 +90,7 @@ function EditorPage(){
             return;
 
         try{
-            const response = await axios.patch(`http://localhost:8080/readme/${readmeId}/update`,
+            const response = await axios.patch(`/readme/${readmeId}/update`,
             {content: editorInput},
             {
                 headers: {
