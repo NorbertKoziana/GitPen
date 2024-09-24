@@ -32,4 +32,9 @@ public class GithubApiController {
         return gitHubApiService.getRepositoryReadme(authentication, owner, repo);
     }
 
+    @GetMapping("/test")
+    public String readme() {
+        return "test";
+    }
+
 }
