@@ -57,7 +57,7 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .cors(cors -> cors.disable()
-                //        .configurationSource(corsConfigurationSource())
+                        //.configurationSource(corsConfigurationSource())
                 )
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers( "/error", "/github/limit", "github/markdown").permitAll()
