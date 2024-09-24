@@ -10,7 +10,7 @@ function Footer(){
             <img src={logo} alt="" className='logo'/>
             <div className='paragraph-wrapper'>
                 Created by: 
-                <a href="https://github.com/NorbertKoziana" target="_blank" className='github-link'>
+                <a href="https://github.com/NorbertKoziana" target="_blank" className='github-link link-footer'>
                     <p>Norbert Koziana </p>
                     <img src={github} alt="" />
                 </a>
