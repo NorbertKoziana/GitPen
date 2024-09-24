@@ -37,4 +37,19 @@ public class GithubApiController {
         return "test";
     }
 
+    @PostMapping("/test2")
+    public String readme2() {
+        return "test";
+    }
+
+    @GetMapping("/test2")
+    public String readme3(Authentication authentication) {
+        return "test";
+    }
+
+    @PostMapping("/test3")
+    public String readme4(Authentication authentication) {
+        return "test";
+    }
+
 }
