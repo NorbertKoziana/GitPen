@@ -47,7 +47,7 @@ function EditorPage(){
               withCredentials: true,
               withXSRFToken: true,
               headers: {
-                "X-XSRF-TOKEN": csrf.data.token
+                "X-XSRF-TOKEN": csrf.data.token.toString()
               }
           });
 
