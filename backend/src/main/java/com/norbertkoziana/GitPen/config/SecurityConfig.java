@@ -1,7 +1,5 @@
 package com.norbertkoziana.GitPen.config;
 
-import com.norbertkoziana.GitPen.csrf.CsrfCookieFilter;
-import com.norbertkoziana.GitPen.csrf.SpaCsrfTokenRequestHandler;
 import com.norbertkoziana.GitPen.oauth2.CustomOAuth2UserService;
 import com.norbertkoziana.GitPen.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +14,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -50,17 +49,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         SimpleUrlAuthenticationFailureHandler handler = new SimpleUrlAuthenticationFailureHandler("/oauth2/error");
 
+        HttpSessionCsrfTokenRepository httpSessionCsrfTokenRepository = new HttpSessionCsrfTokenRepository();
+        httpSessionCsrfTokenRepository.setHeaderName("X-XSRF-TOKEN");
+
         http
                 .csrf((csrf) -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
+                        .csrfTokenRepository(httpSessionCsrfTokenRepository)
                 )
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource())
                 )
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers( "/error", "/github/limit", "github/markdown").permitAll()
+                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/csrf", "github/test").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
