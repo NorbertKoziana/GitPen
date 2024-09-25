@@ -34,12 +34,12 @@ function EditorPage(){
             }
             
 
-          console.log("2")
+          
 
             const csrf = await axios.get('/csrf',{
                 withCredentials: true
             })
-
+            
 
           const response2 = await axios.post('/github/test',
           null,
@@ -47,7 +47,7 @@ function EditorPage(){
               withCredentials: true,
               withXSRFToken: true,
               headers: {
-                "X-XSRF-TOKEN": csrf.data
+                "X-XSRF-TOKEN": csrf.data.token
               }
           });
 
