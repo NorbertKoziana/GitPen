@@ -56,10 +56,6 @@ public class SecurityConfig {
         cookieCsrfTokenRepository.setCookieCustomizer((x) -> x.sameSite(Cookie.SameSite.NONE.attributeValue()).domain(".onrender.com"));
 
         http
-                .csrf((csrf) -> csrf
-                        .csrfTokenRepository(cookieCsrfTokenRepository)
-                        .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
-                )
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource())
                 )
