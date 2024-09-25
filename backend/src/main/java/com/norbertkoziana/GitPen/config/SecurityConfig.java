@@ -40,7 +40,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-XSRF-TOKEN", "X-Xsrf-Token"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -52,16 +52,17 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         SimpleUrlAuthenticationFailureHandler handler = new SimpleUrlAuthenticationFailureHandler("/oauth2/error");
 
+        CookieCsrfTokenRepository cookieCsrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+
         http
                 .csrf((csrf) -> csrf
-                        .disable()
+                        .csrfTokenRepository(cookieCsrfTokenRepository)
                 )
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource())
                 )
-                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2").permitAll()
+                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2", "/csrf").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout

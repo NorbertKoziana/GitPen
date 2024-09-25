@@ -36,17 +36,19 @@ function EditorPage(){
 
           console.log("2")
 
-          const cookieValue = document.cookie
-            .split("; ")
-            .find((row) => row.startsWith("XSRF-TOKEN"))
-            ?.split("=")[1];
-        console.log(cookieValue);
+            const csrf = await axios.get('/csrf',{
+                withCredentials: true
+            })
+
 
           const response2 = await axios.post('/github/test',
           null,
           {
               withCredentials: true,
-              withXSRFToken: true
+              withXSRFToken: true,
+              headers: {
+                "X-XSRF-TOKEN": csrf.data
+              }
           });
 
           console.log("3")

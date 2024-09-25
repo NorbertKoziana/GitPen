@@ -1,4 +1,5 @@
 C:\Users\kozia\Desktop\Projekt\GitPen\backend\src\main\java\com\norbertkoziana\GitPen\config\SecurityConfig.java
+C:\Users\kozia\Desktop\Projekt\GitPen\backend\src\main\java\com\norbertkoziana\GitPen\csrf\CsrfController.java
 C:\Users\kozia\Desktop\Projekt\GitPen\backend\src\main\java\com\norbertkoziana\GitPen\csrf\CsrfCookieFilter.java
 C:\Users\kozia\Desktop\Projekt\GitPen\backend\src\main\java\com\norbertkoziana\GitPen\csrf\SpaCsrfTokenRequestHandler.java
 C:\Users\kozia\Desktop\Projekt\GitPen\backend\src\main\java\com\norbertkoziana\GitPen\githubAPI\GithubApiController.java
