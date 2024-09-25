@@ -52,10 +52,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         SimpleUrlAuthenticationFailureHandler handler = new SimpleUrlAuthenticationFailureHandler("/oauth2/error");
 
-        CookieCsrfTokenRepository cookieCsrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        cookieCsrfTokenRepository.setCookieCustomizer((x) -> x.sameSite(Cookie.SameSite.NONE.attributeValue()).domain(".onrender.com"));
-
         http
+                .csrf((csrf) -> csrf
+                        .disable()
+                )
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource())
                 )
