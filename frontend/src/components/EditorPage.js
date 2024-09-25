@@ -33,21 +33,20 @@ function EditorPage(){
                 localStorage.setItem("editorInput", editorInput);
             }
 
-            try {
-                const response = await axios.post('/github/markdown',
-                { text: editorInput },
-                {
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                    withCredentials: true,
-                    withXSRFToken: true,
-                });
-            
-                setNotePreview(response.data);
-            } catch (error) {
-              handleOpenPopup('error', 'Could not generate preview, try again later.');
-            }
+
+          const response2 = await axios.post('/github/test2',
+          null,
+          {
+              withCredentials: true,
+              withXSRFToken: true,
+          });
+
+          const response3 = await axios.post('/github/test3',
+          null,
+          {
+              withCredentials: true,
+              withXSRFToken: true,
+          });
 
 
         }
