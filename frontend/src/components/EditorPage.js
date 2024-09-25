@@ -40,18 +40,10 @@ function EditorPage(){
           null,
           {
               withCredentials: true,
-              withXSRFToken: true,
+              withXSRFToken: true
           });
 
           console.log("3")
-
-          const response3 = await axios.post('/github/test2',
-          null,
-          {
-              withCredentials: true,
-              withXSRFToken: true,
-          });
-
 
         }
         const timeoutId = setTimeout(fetchData, 1000);
