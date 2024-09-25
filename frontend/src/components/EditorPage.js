@@ -33,22 +33,8 @@ function EditorPage(){
                 localStorage.setItem("editorInput", editorInput);
             }
             
-            console.log("0")
 
-            const response0 = await axios.get('/github/test',
-            {
-                withCredentials: true,
-                withXSRFToken: true,
-            });
-
-            console.log("1")
-  
-            const response1 = await axios.get('/github/test2',
-            {
-                withCredentials: true,
-                withXSRFToken: true,
-            });
-            console.log("2")
+          console.log("2")
 
           const response2 = await axios.post('/github/test',
           null,
