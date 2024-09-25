@@ -57,9 +57,6 @@ public class SecurityConfig {
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .cors(cors -> cors
-                        .configurationSource(corsConfigurationSource())
-                )
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2", "/github/test3").permitAll()
                         .anyRequest().authenticated()
