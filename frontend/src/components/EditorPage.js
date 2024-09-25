@@ -41,7 +41,7 @@ function EditorPage(){
                     'Content-Type': 'application/json',
                     },
                     withCredentials: true,
-                    withXSRFToken: true
+                    withXSRFToken: true,
                 });
             
                 setNotePreview(response.data);

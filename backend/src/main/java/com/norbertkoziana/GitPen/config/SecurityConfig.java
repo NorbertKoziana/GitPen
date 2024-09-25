@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -56,11 +57,11 @@ public class SecurityConfig {
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler())
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-                .cors(cors -> cors.disable()
-                //        .configurationSource(corsConfigurationSource())
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
                 )
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test").permitAll()
+                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2", "/github/test3").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
@@ -73,6 +74,9 @@ public class SecurityConfig {
                                 .userService(this.oauth2UserService())
                         )
                         .defaultSuccessUrl(frontendUrl, true)
+                )
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 )
         ;
 
