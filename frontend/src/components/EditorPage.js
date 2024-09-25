@@ -32,16 +32,34 @@ function EditorPage(){
             if(!readmeId){
                 localStorage.setItem("editorInput", editorInput);
             }
+            
+            console.log("0")
 
+            const response0 = await axios.get('/github/test',
+            {
+                withCredentials: true,
+                withXSRFToken: true,
+            });
 
-          const response2 = await axios.post('/github/test2',
+            console.log("1")
+  
+            const response1 = await axios.get('/github/test2',
+            {
+                withCredentials: true,
+                withXSRFToken: true,
+            });
+            console.log("2")
+
+          const response2 = await axios.post('/github/test',
           null,
           {
               withCredentials: true,
               withXSRFToken: true,
           });
 
-          const response3 = await axios.post('/github/test3',
+          console.log("3")
+
+          const response3 = await axios.post('/github/test2',
           null,
           {
               withCredentials: true,

@@ -37,7 +37,7 @@ public class GithubApiController {
         return "test";
     }
 
-    @PostMapping("/test2")
+    @PostMapping("/test")
     public String readme2() {
         return "test";
     }
@@ -47,7 +47,7 @@ public class GithubApiController {
         return "test";
     }
 
-    @PostMapping("/test3")
+    @PostMapping("/test2")
     public String readme4(Authentication authentication) {
         return "test";
     }

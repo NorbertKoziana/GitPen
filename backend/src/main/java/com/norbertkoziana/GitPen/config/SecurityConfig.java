@@ -38,8 +38,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(frontendUrl, "https://gitpen.netlify.app/editor", "https://netlify.app", "https" +
-                "://www.netlify.com", "https://gitpen.netlify.app"));
+        configuration.setAllowedOrigins(Arrays.asList(frontendUrl));
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "X-XSRF-TOKEN"));
@@ -59,7 +58,7 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2", "/github/test3").permitAll()
+                        .requestMatchers( "/error", "/github/limit", "github/markdown", "/github/test", "/github/test2").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
