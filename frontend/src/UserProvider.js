@@ -46,6 +46,17 @@ export default function UserProvider({children}){
     }, [])
 
     useEffect(() => {
+      async function fetchData(){
+        const csrfToken = await axios.get("/csrf",{
+          withCredentials: true
+        });
+        axios.defaults.headers.common['X-XSRF-TOKEN'] = csrfToken.data.token.toString();
+      }
+      fetchData();
+    }
+    ,[user])
+
+    useEffect(() => {
         const fetchUserInfo = async () => {
           try{
             const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user/info`,{

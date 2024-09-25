@@ -32,7 +32,7 @@ function EditorPage(){
             if(!readmeId){
                 localStorage.setItem("editorInput", editorInput);
             }
-
+            
             try {
                 const response = await axios.post('/github/markdown',
                 { text: editorInput },
@@ -40,15 +40,13 @@ function EditorPage(){
                     headers: {
                     'Content-Type': 'application/json',
                     },
-                    withCredentials: true,
-                    withXSRFToken: true
+                    withCredentials: true
                 });
             
                 setNotePreview(response.data);
             } catch (error) {
               handleOpenPopup('error', 'Could not generate preview, try again later.');
             }
-
 
         }
         const timeoutId = setTimeout(fetchData, 1000);
