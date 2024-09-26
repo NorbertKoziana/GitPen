@@ -88,7 +88,7 @@ function UserRepositories(){
             </Divider>
             <h3 className="permission-prompt">
                 If you don't see your repository change its visibility to public or install app on the desired private repository by clicking the icon:  
-                <a href="https://github.com/apps/gitpen-v1/installations/new">
+                <a href="https://github.com/apps/gitpen-v0/installations/new">
                     <img src={githubInstall} alt="install github" className="github-install-icon" />
                 </a>
             </h3>
