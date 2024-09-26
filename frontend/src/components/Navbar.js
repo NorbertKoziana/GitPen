@@ -27,6 +27,13 @@ function Navbar(){
     function renderLogout(){
         return (
             <>
+                <NavLink to="/editor"
+                    className={({ isActive, isPending }) =>
+                        isPending ? "pending" : isActive ? "active" : ""
+                    }
+                    >
+                    Editor
+                </NavLink>
                 <NavLink to="/repos"
                     className={({ isActive, isPending }) =>
                         isPending ? "pending" : isActive ? "active" : ""
@@ -60,13 +67,6 @@ function Navbar(){
                     <img src={whiteLogo} alt='logo' className='logo'/> : 
                     <img src={blackLogo} alt='logo' className='logo'/>
                 )}
-            </NavLink>
-            <NavLink to="/editor"
-                className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
-                }
-                >
-                Editor
             </NavLink>
             {user ? renderLogout() : renderSignin()}
         </div>
