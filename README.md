@@ -32,6 +32,7 @@ Please note that the first request may take a few minutes to load as the server 
 - The GitPen app requires **read-only** access to your repositories for loading private `README` files.
 
 ## 👀 Application Preview
+(Click on the image for better quality)
 
 <br><br>
 
